@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/josie/Develop/android/quake/PushSDK/assets"/><source path="/Users/josie/Develop/android/quake/PushSDK/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/josie/Develop/android/quake/PushSDK/build-types/debug/assets"/></dataSet></merger>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_weight="8"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    </android.support.v4.view.ViewPager>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageButton
+            android:id="@+id/main"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/business_main"
+            android:background="@color/translate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/chart"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/translate"
+            android:src="@drawable/chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/shangchuan"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/translate"
+            android:src="@drawable/shangchuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/me"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/translate"
+            android:src="@drawable/me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

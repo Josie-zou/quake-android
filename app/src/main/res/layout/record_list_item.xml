@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/dataImage"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_alignParentLeft="true"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+    <TextView
+        android:id="@+id/dataType"
+        android:text="test1"
+        android:gravity="center_vertical"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/dataImage"
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+    <TextView
+        android:id="@+id/dataTitle"
+        android:text="test2"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/dataImage"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlack"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="3dp"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <TextView
+        android:id="@+id/dataDetail"
+        android:text="test3"
+        android:textColor="@color/colorBlack"
+        android:gravity="center_vertical"
+        android:textSize="18dp"
+        android:layout_below="@+id/dataTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</RelativeLayout>
