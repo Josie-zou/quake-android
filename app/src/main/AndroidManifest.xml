@@ -21,6 +21,7 @@
         <activity android:name=".activity.ChangePasswordActivity"></activity>
         <activity android:name=".activity.AboutActivity"></activity>
         <activity android:name=".activity.SignUpActivity"></activity>
+        <activity android:name=".activity.WebViewActivity"></activity>
 
         <meta-data
             android:name="UMENG_APPKEY"

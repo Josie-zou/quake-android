@@ -1,6 +1,7 @@
 package com.josie.earthquake.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebView;
@@ -15,12 +16,17 @@ import com.josie.earthquake.R;
  */
 public class WebViewActivity extends Activity {
     private WebView webView;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_view);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        url = bundle.getString("url");
         initView();
+        webView.loadUrl(url);
         initEvent();
     }
 

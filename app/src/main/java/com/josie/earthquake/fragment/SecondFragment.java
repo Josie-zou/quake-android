@@ -82,20 +82,13 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     public void onStart() {
         super.onStart();
         initView();
-        initData();
+        getData();
         initEvent();
     }
 
     private void initView() {
         listView = (ListView) getView().findViewById(R.id.dataList);
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.pull_to_refresh);
-    }
-
-    private void initData() {
-        getData();
-//        listViewAdapter = new ListViewAdapter(getData(), getActivity().getLayoutInflater(), getContext());
-//        simpleAdapter = new SimpleAdapter(getContext(), getData(), R.layout.record_list_item, new String[]{"image", "type", "title", "detail"}, new int[]{R.id.dataImage, R.id.dataType, R.id.dataTitle, R.id.dataDetail});
-//        listView.setAdapter(simpleAdapter);
     }
 
     private List<QuakeInfo> getData() {
@@ -144,7 +137,9 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
+                bundle.putString("url", result.get(position).getJumpTo());
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
