@@ -20,11 +20,11 @@ public class QuakeInfo {
 
     private String jumpTo;
 
-    private Date createTime;
+    private String createTime;
 
-    private Date publishTime;
+    private String publishTime;
 
-    private Date verifyTime;
+    private String verifyTime;
 
     public Integer getId() {
         return id;
@@ -82,27 +82,27 @@ public class QuakeInfo {
         this.jumpTo = jumpTo == null ? null : jumpTo.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getPublishTime() {
+    public String getPublishTime() {
         return publishTime;
     }
 
-    public void setPublishTime(Date publishTime) {
+    public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
     }
 
-    public Date getVerifyTime() {
+    public String getVerifyTime() {
         return verifyTime;
     }
 
-    public void setVerifyTime(Date verifyTime) {
+    public void setVerifyTime(String verifyTime) {
         this.verifyTime = verifyTime;
     }
 

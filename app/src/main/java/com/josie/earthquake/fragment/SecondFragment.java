@@ -3,9 +3,12 @@ package com.josie.earthquake.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +20,18 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.josie.earthquake.R;
+import com.josie.earthquake.activity.LoginActivity;
 import com.josie.earthquake.activity.WebViewActivity;
+import com.josie.earthquake.adapter.ListViewAdapter;
+import com.josie.earthquake.model.QuakeInfo;
+import com.josie.earthquake.utils.HttpClientUtils;
 import com.yalantis.phoenix.PullToRefreshView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,12 +44,18 @@ import jp.wasabeef.blurry.Blurry;
  * Created by Josie on 16/5/4.
  */
 public class SecondFragment extends android.support.v4.app.Fragment {
+    private int id = 1;
     private View view;
     private ListView listView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private SimpleAdapter simpleAdapter;
-    private List<Map<String, Object>> result;
+    private List<QuakeInfo> result;
     private boolean loadingMore = true;
+    private int start;
+    private int count;
+    private String url;
+    private String response;
+    private Map<String, String> params;
+    private ListViewAdapter listViewAdapter;
 
     public static SecondFragment instance() {
         SecondFragment view = new SecondFragment();
@@ -74,56 +92,38 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     }
 
     private void initData() {
-        simpleAdapter = new SimpleAdapter(getContext(), getData(), R.layout.record_list_item, new String[]{"image", "type", "title", "detail"}, new int[]{R.id.dataImage, R.id.dataType, R.id.dataTitle, R.id.dataDetail});
-        listView.setAdapter(simpleAdapter);
+        getData();
+//        listViewAdapter = new ListViewAdapter(getData(), getActivity().getLayoutInflater(), getContext());
+//        simpleAdapter = new SimpleAdapter(getContext(), getData(), R.layout.record_list_item, new String[]{"image", "type", "title", "detail"}, new int[]{R.id.dataImage, R.id.dataType, R.id.dataTitle, R.id.dataDetail});
+//        listView.setAdapter(simpleAdapter);
     }
 
-    private List<Map<String, Object>> getData() {
-        result = new ArrayList<Map<String, Object>>();
-        Map<String, Object> data1 = new HashMap<>();
-        data1.put("image", R.drawable.voc);
-        data1.put("type", "微博");
-        data1.put("title", "title1");
-        data1.put("detail", "detail1");
-
-        Map<String, Object> data2 = new HashMap<>();
-        data2.put("image", R.drawable.voc);
-        data2.put("type", "微博");
-        data2.put("title", "title1");
-        data2.put("detail", "detail1");
-
-        Map<String, Object> data3 = new HashMap<>();
-        data3.put("image", R.drawable.voc);
-        data3.put("type", "微博");
-        data3.put("title", "title1");
-        data3.put("detail", "detail1");
-
-        Map<String, Object> data4 = new HashMap<>();
-        data4.put("image", R.drawable.voc);
-        data4.put("type", "微博");
-        data4.put("title", "title1");
-        data4.put("detail", "detail1");
-
-        Map<String, Object> data5 = new HashMap<>();
-        data5.put("image", R.drawable.voc);
-        data5.put("type", "微博");
-        data5.put("title", "title1");
-        data5.put("detail", "detail1");
-
-        Map<String, Object> data6 = new HashMap<>();
-        data6.put("image", R.drawable.voc);
-        data6.put("type", "微博");
-        data6.put("title", "title1");
-        data6.put("detail", "detail1");
-
-        result.add(data1);
-        result.add(data2);
-        result.add(data3);
-        result.add(data4);
-        result.add(data5);
-        result.add(data6);
+    private List<QuakeInfo> getData() {
+        url = "http://192.168.1.122:8080/quake/getall?";
+        result = new ArrayList<>();
+        start = result.size();
+        count = 5;
+        params = new HashMap<>();
+        params.put("id", Integer.toString(id));
+        params.put("start", Integer.toString(start));
+        params.put("count", Integer.toString(count));
+        new Thread(getdataRunnable).start();
         return result;
+
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    Log.e("response", result.toString());
+                    listViewAdapter = new ListViewAdapter(result, getActivity().getLayoutInflater(), getContext());
+                    listView.setAdapter(listViewAdapter);
+            }
+        }
+    };
 
     private void initEvent() {
 
@@ -148,6 +148,67 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                 startActivity(intent);
             }
         });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (totalItemCount - visibleItemCount == firstVisibleItem) {
+                    getMoreData();
+                }
+            }
+        });
+
+    }
+
+    private void getMoreData() {
+
+    }
+
+    Runnable getdataRunnable = new Runnable() {
+        @Override
+        public void run() {
+            HttpClientUtils httpClientUtils = new HttpClientUtils();
+            try {
+                response = httpClientUtils.doPost(url, params);
+                parseResponse();
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private void parseResponse() throws JSONException {
+        JSONObject jsonObject = new JSONObject(response);
+        JSONArray datas = jsonObject.getJSONArray("data");
+        result = new ArrayList<>();
+        for (int i = 0; i < datas.length(); i++) {
+            JSONObject jsonObject1 = (JSONObject) datas.get(i);
+            QuakeInfo quakeInfo = new QuakeInfo();
+            quakeInfo.setId(jsonObject1.getInt("id"));
+            quakeInfo.setTitle(jsonObject1.getString("title"));
+            quakeInfo.setDescription(jsonObject1.getString("description"));
+            quakeInfo.setType(jsonObject1.getString("type"));
+            quakeInfo.setManager(jsonObject1.getInt("manager"));
+            quakeInfo.setStatus(jsonObject1.getInt("status"));
+            quakeInfo.setJumpTo(jsonObject1.getString("jumpTo"));
+            String createTime = jsonObject1.get("createTime").toString();
+            quakeInfo.setCreateTime(createTime);
+            String publishTime = jsonObject1.get("publishTime").toString();
+            quakeInfo.setPublishTime(publishTime);
+            String verifyTime = jsonObject1.get("verifyTime").toString();
+            quakeInfo.setVerifyTime(verifyTime);
+            result.add(quakeInfo);
+        }
 
     }
 }
