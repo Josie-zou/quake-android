@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
-        android:layout_weight="8"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="8"
+        android:orientation="horizontal"></android.support.v4.view.ViewPager>
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:background="@color/colorGray"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:background="@color/colorGray"
+        android:orientation="horizontal">
         <!--<ImageButton-->
-            <!--android:id="@+id/main"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:src="@drawable/business_main"-->
-            <!--android:background="@color/translate"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-        <ImageButton
-            android:id="@+id/chart"
+        <!--android:id="@+id/main"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:src="@drawable/business_main"-->
+        <!--android:background="@color/translate"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+        <LinearLayout
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@color/translate"
-            android:src="@drawable/chart"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageButton
-            android:id="@+id/shangchuan"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/chart"
+                android:layout_marginLeft="40sp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:background="@color/translate"
+                android:src="@drawable/main" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@color/translate"
-            android:src="@drawable/shangchuan"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageButton
-            android:id="@+id/me"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/shangchuan"
+                android:layout_gravity="center"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="40sp"
+                android:scaleType="fitXY"
+                android:background="@color/translate"
+                android:src="@drawable/chart_new"  />
+        </LinearLayout>
+        <LinearLayout
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@color/translate"
-            android:src="@drawable/me"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/me"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="40sp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/set"/>
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 </LinearLayout>

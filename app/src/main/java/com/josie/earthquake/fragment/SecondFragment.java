@@ -2,6 +2,8 @@ package com.josie.earthquake.fragment;
 
 
 import android.content.Intent;
+import android.nfc.NfcEvent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,13 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.josie.earthquake.R;
-import com.josie.earthquake.activity.LoginActivity;
 import com.josie.earthquake.activity.WebViewActivity;
 import com.josie.earthquake.adapter.ListViewAdapter;
 import com.josie.earthquake.model.QuakeInfo;
 import com.josie.earthquake.utils.HttpClientUtils;
-import com.roger.catloadinglibrary.CatLoadingView;
-import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import jp.wasabeef.blurry.Blurry;
 
@@ -63,7 +61,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private String response;
     private Map<String, String> params;
     private ListViewAdapter listViewAdapter;
-    private CatLoadingView catLoadingView;
+    private MyDialogFragment fragment;
 
     public static SecondFragment instance() {
         SecondFragment view = new SecondFragment();
@@ -123,10 +121,16 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-//                    footerView.setVisibility(View.GONE);
+                    footerView.setVisibility(View.GONE);
                     Log.e("response", result.toString());
                     listViewAdapter = new ListViewAdapter(result, getActivity().getLayoutInflater(), getContext());
                     listView.setAdapter(listViewAdapter);
+                    break;
+                case 2:
+                    fragment.show(getFragmentManager(), "test");
+                    break;
+
+
             }
         }
     };
@@ -180,6 +184,23 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                listView.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
+//                        Message message = new Message();
+//                        message.what = 2;
+//                        handler.sendMessage(message);
+//                    }
+//                }, 3000);
+                Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+
+                return true;
+            }
+        });
     }
 
     private void getMoreData() {
@@ -212,7 +233,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private void parseResponse() throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
         JSONArray datas = jsonObject.getJSONArray("data");
-        if (datas.length() < count || datas.length() == 0){
+        if (datas.length() < count || datas.length() == 0) {
             loadingMore = false;
         }
         for (int i = 0; i < datas.length(); i++) {
@@ -235,4 +256,19 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         }
 
     }
+
+//    private class DialogAynTask extends AsyncTask {
+//        MyDialogFragment fragment;
+//
+//        @Override
+//        protected Object doInBackground(Object[] params) {
+//            return params[0];
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Object o) {
+////            fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
+////            fragment.show(getFragmentManager(), o.toString());
+//        }
+//    }
 }
