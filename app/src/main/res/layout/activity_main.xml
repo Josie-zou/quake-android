@@ -15,14 +15,14 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="50dp">
-        <ImageButton
-            android:id="@+id/main"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/business_main"
-            android:background="@color/translate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/main"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:src="@drawable/business_main"-->
+            <!--android:background="@color/translate"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
         <ImageButton
             android:id="@+id/chart"
             android:layout_weight="1"

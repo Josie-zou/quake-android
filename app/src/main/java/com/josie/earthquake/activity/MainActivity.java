@@ -74,34 +74,35 @@ public class MainActivity extends FragmentActivity {
 
     private void initView() {
         viewPager = (ViewPager) this.findViewById(R.id.view_pager);
-        imageButton1 = (ImageButton) this.findViewById(R.id.main);
+//        imageButton1 = (ImageButton) this.findViewById(R.id.main);
         imageButton2 = (ImageButton) this.findViewById(R.id.chart);
         imageButton3 = (ImageButton) this.findViewById(R.id.shangchuan);
         imageButton4 = (ImageButton) this.findViewById(R.id.me);
 
         layoutInflater = LayoutInflater.from(this);
         List<Fragment> fragments = new ArrayList<>();
-        Fragment firstFragment = FirstFragment.instance();
+//        Fragment firstFragment = FirstFragment.instance();
         Fragment secondFragment = SecondFragment.instance();
-        Fragment thirdFragment = ThirdFragment.instance();
         Fragment fourthFragment = FourthFragment.instance();
+        Fragment thirdFragment = ThirdFragment.instance();
 
-        fragments.add(firstFragment);
+//        fragments.add(firstFragment);
         fragments.add(secondFragment);
-        fragments.add(thirdFragment);
         fragments.add(fourthFragment);
+        fragments.add(thirdFragment);
+
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(3);
 
-        imageButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(0);
-            }
-        });
+//        imageButton1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                viewPager.setCurrentItem(0);
+//            }
+//        });
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
