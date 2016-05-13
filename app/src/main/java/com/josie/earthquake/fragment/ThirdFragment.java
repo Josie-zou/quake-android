@@ -5,35 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.josie.earthquake.R;
 import com.josie.earthquake.activity.AboutActivity;
 import com.josie.earthquake.activity.ChangePasswordActivity;
-import com.josie.earthquake.activity.LoginActivity;
 import com.josie.earthquake.activity.MeDataActivity;
-import com.josie.earthquake.adapter.SettingAdapter;
-import com.umeng.message.PushAgent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import jp.wasabeef.blurry.Blurry;
 
 /**
  * Created by Josie on 16/5/4.

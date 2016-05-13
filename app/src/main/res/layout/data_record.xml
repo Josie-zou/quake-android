@@ -13,8 +13,8 @@
             android:footerDividersEnabled="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/colorBlue"
-            android:dividerHeight="1dp" />
+            android:divider="@color/colorGray"
+            android:dividerHeight="0.5dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

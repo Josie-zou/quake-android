@@ -16,7 +16,10 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.josie.earthquake.R;
@@ -25,6 +28,7 @@ import com.josie.earthquake.activity.WebViewActivity;
 import com.josie.earthquake.adapter.ListViewAdapter;
 import com.josie.earthquake.model.QuakeInfo;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
@@ -47,15 +51,19 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private int id = 1;
     private View view;
     private ListView listView;
+    private View footerView;
+    private TextView footer;
+    private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<QuakeInfo> result;
-    private boolean loadingMore = true;
+    private boolean loadingMore = false;
     private int start;
     private int count;
     private String url;
     private String response;
     private Map<String, String> params;
     private ListViewAdapter listViewAdapter;
+    private CatLoadingView catLoadingView;
 
     public static SecondFragment instance() {
         SecondFragment view = new SecondFragment();
@@ -89,18 +97,22 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private void initView() {
         listView = (ListView) getView().findViewById(R.id.dataList);
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.pull_to_refresh);
+        footerView = LayoutInflater.from(getContext()).inflate(R.layout.list_footer, null);
+        footer = (TextView) footerView.findViewById(R.id.footer);
+        progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar);
     }
 
     private List<QuakeInfo> getData() {
         url = "http://192.168.1.122:8080/quake/getall?";
         result = new ArrayList<>();
         start = result.size();
-        count = 5;
+        count = 6;
         params = new HashMap<>();
         params.put("id", Integer.toString(id));
         params.put("start", Integer.toString(start));
         params.put("count", Integer.toString(count));
         new Thread(getdataRunnable).start();
+        loadingMore = true;
         return result;
 
     }
@@ -111,6 +123,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
+//                    footerView.setVisibility(View.GONE);
                     Log.e("response", result.toString());
                     listViewAdapter = new ListViewAdapter(result, getActivity().getLayoutInflater(), getContext());
                     listView.setAdapter(listViewAdapter);
@@ -128,6 +141,9 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
+                        result = null;
+                        loadingMore = true;
+                        getData();
                     }
                 }, 3000);
             }
@@ -152,16 +168,27 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (totalItemCount - visibleItemCount == firstVisibleItem) {
-                    getMoreData();
+                if (result != null && result.size() != 0) {
+                    if ((totalItemCount - visibleItemCount == firstVisibleItem) && loadingMore && (listViewAdapter != null)) {
+                        listView.addFooterView(footerView);
+                        getMoreData();
+                        listViewAdapter.notifyDataSetChanged();
+                        listView.setSelection(visibleItemCount + 1); //设置选中项
+                    }
                 }
+
             }
         });
 
     }
 
     private void getMoreData() {
-
+        start = result.size();
+        params = new HashMap<>();
+        params.put("id", Integer.toString(id));
+        params.put("start", Integer.toString(start));
+        params.put("count", Integer.toString(count));
+        new Thread(getdataRunnable).start();
     }
 
     Runnable getdataRunnable = new Runnable() {
@@ -185,7 +212,9 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private void parseResponse() throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
         JSONArray datas = jsonObject.getJSONArray("data");
-        result = new ArrayList<>();
+        if (datas.length() < count || datas.length() == 0){
+            loadingMore = false;
+        }
         for (int i = 0; i < datas.length(); i++) {
             JSONObject jsonObject1 = (JSONObject) datas.get(i);
             QuakeInfo quakeInfo = new QuakeInfo();

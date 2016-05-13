@@ -34,6 +34,6 @@ dependencies {
     compile 'com.roger.match.library:library:1.0.1'
     compile 'com.yalantis:phoenix:1.2.3'
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
-//    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    compile 'com.roger.catloadinglibrary:catloadinglibrary:1.0.1'
     compile project(':PushSDK')
 }
