@@ -2,8 +2,6 @@ package com.josie.earthquake.fragment;
 
 
 import android.content.Intent;
-import android.nfc.NfcEvent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -89,6 +87,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     public void onStart() {
         super.onStart();
         initView();
+        result = new ArrayList<>();
+        firstLoad = true;
         getData();
         initEvent();
     }
@@ -103,8 +103,6 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 
     private List<QuakeInfo> getData() {
         url = "http://192.168.1.122:8080/quake/getall?";
-        result = null;
-        result = new ArrayList<>();
         start = result.size();
         count = 6;
         params = new HashMap<>();
@@ -167,6 +165,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
+                        result = new ArrayList<>();
+                        firstLoad = true;
                         loadingMore = true;
                         getData();
                     }
@@ -193,8 +193,9 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (result != null && result.size() != 0) {
+                if (!firstLoad && result != null && result.size() != 0) {
                     if ((totalItemCount - visibleItemCount == firstVisibleItem) && loadingMore && (listViewAdapter != null)) {
+                        loadingMore = false;
                         listView.addFooterView(footerView);
                         getMoreData();
                         listViewAdapter.notifyDataSetChanged();
@@ -217,16 +218,16 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 //                        handler.sendMessage(message);
 //                    }
 //                },0);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
-                        Message message = new Message();
-                        message.what = 2;
-                        handler.sendMessage(message);
-                    }
-                }).start();
-//                Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
+//                        Message message = new Message();
+//                        message.what = 2;
+//                        handler.sendMessage(message);
+//                    }
+//                }).start();
+                Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
 
                 return true;
             }
@@ -267,6 +268,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         JSONArray datas = jsonObject.getJSONArray("data");
         if (datas == null || datas.length() < count || datas.length() == 0) {
             loadingMore = false;
+        } else {
+            loadingMore = true;
         }
         for (int i = 0; i < datas.length(); i++) {
             JSONObject jsonObject1 = (JSONObject) datas.get(i);
