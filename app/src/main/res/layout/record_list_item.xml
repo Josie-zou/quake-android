@@ -1,45 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/dataImage"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="3dp"
-        android:layout_alignParentLeft="true"
         android:layout_width="32dp"
-        android:layout_height="32dp" />
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background"
+        android:scaleType="fitXY" />
+
     <TextView
         android:id="@+id/dataType"
-        android:text="test1"
-        android:gravity="center_vertical"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/dataImage"
         android:layout_width="match_parent"
-        android:layout_height="32dp" />
+        android:layout_height="32dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@+id/dataImage"
+        android:gravity="center_vertical"
+        android:text="test1" />
+
     <TextView
         android:id="@+id/dataTitle"
-        android:text="test2"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/dataImage"
-        android:textStyle="bold"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="3"
         android:textColor="@color/colorBlack"
         android:textSize="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="3dp"
-        android:layout_alignParentLeft="true"
+        android:textStyle="bold" />
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/tagcontainerLayout1"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dataTitle"
+        android:padding="10dp"
+        app:container_background_color="#00000000"
+        app:container_border_color="#00000000"
+        app:container_border_radius="0dp"
+        app:container_border_width="4dp"
+        app:container_enable_drag="true"
+        app:horizontal_interval="10dp"
+        app:tag_background_color="#00000000"
+        app:tag_clickable="false"
+        app:tag_text_color="#FF6666"
+        app:tag_theme="none"
+        app:vertical_interval="10dp" />
+
+
     <TextView
         android:id="@+id/dataDetail"
-        android:text="test3"
-        android:textColor="@color/colorBlack"
-        android:gravity="center_vertical"
-        android:textSize="18dp"
-        android:layout_below="@+id/dataTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tagcontainerLayout1"
         android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:gravity="center_vertical"
+        android:text="test3"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/colorPink"
+        android:textSize="10dp" />
+
 
 </RelativeLayout>

@@ -7,7 +7,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorBlue"
+        android:background="@color/toolbarCorlor"
         android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
     <ListView
         android:id="@+id/listView"

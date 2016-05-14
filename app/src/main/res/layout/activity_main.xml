@@ -16,7 +16,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:background="@color/colorGray"
+        android:background="@color/colorNearWhite"
         android:orientation="horizontal">
         <!--<ImageButton-->
         <!--android:id="@+id/main"-->
@@ -27,47 +27,51 @@
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content" />-->
         <LinearLayout
-            android:layout_weight="1"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/chart"
-                android:layout_marginLeft="40sp"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:scaleType="fitXY"
+                android:layout_marginLeft="40sp"
                 android:background="@color/translate"
+                android:scaleType="fitXY"
                 android:src="@drawable/main" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
             <ImageButton
                 android:id="@+id/shangchuan"
-                android:layout_gravity="center"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="40sp"
-                android:scaleType="fitXY"
                 android:background="@color/translate"
-                android:src="@drawable/chart_new"  />
+                android:scaleType="fitXY"
+                android:src="@drawable/chart_new" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
             <ImageButton
                 android:id="@+id/me"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="40sp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/set"/>
+                android:layout_marginLeft="40sp"
+                android:background="@drawable/set" />
         </LinearLayout>
-
 
 
     </LinearLayout>

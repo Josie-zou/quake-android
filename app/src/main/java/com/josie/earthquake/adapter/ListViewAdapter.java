@@ -11,7 +11,10 @@ import android.widget.TextView;
 import com.josie.earthquake.R;
 import com.josie.earthquake.model.QuakeInfo;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import co.lujun.androidtagview.TagContainerLayout;
 
 /**
  * Created by Josie on 16/5/13.
@@ -19,6 +22,7 @@ import java.util.List;
 public class ListViewAdapter extends BaseAdapter {
 
     private List<QuakeInfo> quakeInfos;//定义数据。
+    private List<String> tags = new ArrayList<>();
     private LayoutInflater layoutInflater;//定义Inflater,加载我们自定义的布局。
     private Context context;
 
@@ -47,13 +51,14 @@ public class ListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
+            tags.add("hello");
             convertView = layoutInflater.inflate(R.layout.record_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.icon = (ImageView) convertView.findViewById(R.id.dataImage);
             viewHolder.dataType = (TextView) convertView.findViewById(R.id.dataType);
             viewHolder.dataTitle = (TextView) convertView.findViewById(R.id.dataTitle);
             viewHolder.dataDetail = (TextView) convertView.findViewById(R.id.dataDetail);
-
+            viewHolder.tagContainerLayout = (TagContainerLayout) convertView.findViewById(R.id.tagcontainerLayout1);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -63,6 +68,7 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.dataType.setText(quakeInfos.get(position).getType());
         viewHolder.dataTitle.setText(quakeInfos.get(position).getTitle());
         viewHolder.dataDetail.setText(quakeInfos.get(position).getDescription());
+        viewHolder.tagContainerLayout.setTag("test");
 
         return convertView;    }
 
@@ -72,6 +78,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView dataType;
         TextView dataTitle;
         TextView dataDetail;
+        TagContainerLayout tagContainerLayout;
 
     }
 }

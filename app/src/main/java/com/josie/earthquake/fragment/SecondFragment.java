@@ -210,7 +210,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                         listView.addFooterView(footerView);
                         getMoreData();
                         listViewAdapter.notifyDataSetChanged();
-                        listView.setSelection(visibleItemCount + 1); //设置选中项
+//                        listView.setSelectionAfterHeaderView();
+//                        listView.setSelection(listView.getCount() - 1); //设置选中项
                     }
                 }
 
@@ -315,7 +316,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
         }
         return super.onOptionsItemSelected(item);

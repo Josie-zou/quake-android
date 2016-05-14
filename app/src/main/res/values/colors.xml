@@ -11,5 +11,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="translate">#00000000</color>
+    <color name="toolbarCorlor">#333333</color>
+    <color name="colorNearWhite">#F8F8FF</color>
     <color name="colorGray">#CCCCCC</color>
 </resources>

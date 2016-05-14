@@ -21,6 +21,10 @@ import com.josie.earthquake.activity.AboutActivity;
 import com.josie.earthquake.activity.ChangePasswordActivity;
 import com.josie.earthquake.activity.MeDataActivity;
 
+import java.util.List;
+
+import co.lujun.androidtagview.TagContainerLayout;
+
 /**
  * Created by Josie on 16/5/4.
  */
@@ -33,6 +37,8 @@ public class ThirdFragment extends Fragment {
     private Button logout;
     private Bundle bundle;
     private Toolbar toolbar;
+    private TagContainerLayout tagContainerLayout;
+    private List<String> tags;
 
     public static ThirdFragment instance() {
         ThirdFragment view = new ThirdFragment();
@@ -63,6 +69,8 @@ public class ThirdFragment extends Fragment {
         changePassword = (Button) getView().findViewById(R.id.changePassword);
         userManage = (Button) getView().findViewById(R.id.userManage);
         logout = (Button) getView().findViewById(R.id.logout);
+//        tagContainerLayout = (TagContainerLayout) getView().findViewById(R.id.tagcontainerLayout);
+//        tagContainerLayout.addTag("test");
 
         toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
