@@ -120,7 +120,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     Runnable getFirstData = new Runnable() {
         @Override
         public void run() {
-            if (firstLoad){
+            if (firstLoad) {
                 HttpClientUtils httpClientUtils = new HttpClientUtils();
                 try {
                     response = httpClientUtils.doPost(url, params);
@@ -216,8 +216,17 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 //                        message.what = 2;
 //                        handler.sendMessage(message);
 //                    }
-//                }, 3000);
-                Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
+//                },0);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
+                        Message message = new Message();
+                        message.what = 2;
+                        handler.sendMessage(message);
+                    }
+                }).start();
+//                Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
 
                 return true;
             }
@@ -271,8 +280,6 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             quakeInfo.setJumpTo(jsonObject1.getString("jumpTo"));
             String createTime = jsonObject1.get("createTime").toString();
             quakeInfo.setCreateTime(createTime);
-            String publishTime = jsonObject1.get("publishTime").toString();
-            quakeInfo.setPublishTime(publishTime);
             String verifyTime = jsonObject1.get("verifyTime").toString();
             quakeInfo.setVerifyTime(verifyTime);
             currentResult.add(quakeInfo);
@@ -282,19 +289,4 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         response = null;
 
     }
-
-//    private class DialogAynTask extends AsyncTask {
-//        MyDialogFragment fragment;
-//
-//        @Override
-//        protected Object doInBackground(Object[] params) {
-//            return params[0];
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Object o) {
-////            fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
-////            fragment.show(getFragmentManager(), o.toString());
-//        }
-//    }
 }

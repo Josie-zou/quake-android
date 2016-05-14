@@ -22,8 +22,6 @@ public class QuakeInfo {
 
     private String createTime;
 
-    private String publishTime;
-
     private String verifyTime;
 
     public Integer getId() {
@@ -88,14 +86,6 @@ public class QuakeInfo {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
-    }
-
-    public String getPublishTime() {
-        return publishTime;
-    }
-
-    public void setPublishTime(String publishTime) {
-        this.publishTime = publishTime;
     }
 
     public String getVerifyTime() {
