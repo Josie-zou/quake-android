@@ -8,19 +8,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +51,9 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<QuakeInfo> result;
+    private List<QuakeInfo> currentResult;
     private boolean loadingMore = false;
+    private boolean firstLoad = true;
     private int start;
     private int count;
     private String url;
@@ -106,6 +103,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 
     private List<QuakeInfo> getData() {
         url = "http://192.168.1.122:8080/quake/getall?";
+        result = null;
         result = new ArrayList<>();
         start = result.size();
         count = 6;
@@ -113,11 +111,32 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         params.put("id", Integer.toString(id));
         params.put("start", Integer.toString(start));
         params.put("count", Integer.toString(count));
-        new Thread(getdataRunnable).start();
+        new Thread(getFirstData).start();
         loadingMore = true;
         return result;
 
     }
+
+    Runnable getFirstData = new Runnable() {
+        @Override
+        public void run() {
+            if (firstLoad){
+                HttpClientUtils httpClientUtils = new HttpClientUtils();
+                try {
+                    response = httpClientUtils.doPost(url, params);
+                    parseResponse();
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                firstLoad = false;
+            }
+        }
+    };
 
     Handler handler = new Handler() {
         @Override
@@ -148,7 +167,6 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        result = null;
                         loadingMore = true;
                         getData();
                     }
@@ -234,9 +252,11 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     };
 
     private void parseResponse() throws JSONException {
+        currentResult = null;
+        currentResult = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(response);
         JSONArray datas = jsonObject.getJSONArray("data");
-        if (datas.length() < count || datas.length() == 0) {
+        if (datas == null || datas.length() < count || datas.length() == 0) {
             loadingMore = false;
         }
         for (int i = 0; i < datas.length(); i++) {
@@ -255,8 +275,11 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             quakeInfo.setPublishTime(publishTime);
             String verifyTime = jsonObject1.get("verifyTime").toString();
             quakeInfo.setVerifyTime(verifyTime);
-            result.add(quakeInfo);
+            currentResult.add(quakeInfo);
         }
+        result.addAll(currentResult);
+        currentResult = null;
+        response = null;
 
     }
 
