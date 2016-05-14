@@ -1,85 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_margin="10dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorBlue"
+        android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
 
     <TextView
         android:id="@+id/settingTitle"
         android:layout_width="wrap_content"
-        android:layout_margin="5dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:layout_below="@id/toolbar"
+        android:layout_margin="5dp"
         android:text="基本设置"
+        android:textColor="@color/colorBlue"
         android:textSize="15dp"
-        android:textColor="@color/colorBlue" />
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/changeData"
-        android:gravity="center_vertical"
-        android:background="@color/translate"
-        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingTitle"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:background="@color/translate"
+        android:gravity="center_vertical"
         android:text="修改资料"
-        android:layout_below="@+id/settingTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="18dp" />
+
     <View
+        android:layout_width="fill_parent"
         android:layout_height="1px"
+        android:layout_below="@+id/changeData"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/changeData"
-        android:background="@color/colorGray"
-        android:layout_width="fill_parent"></View>
+        android:background="@color/colorGray"></View>
+
     <Button
         android:id="@+id/changePassword"
-        android:textSize="18dp"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changeData"
         android:layout_marginLeft="10dp"
         android:background="@color/translate"
+        android:gravity="center_vertical"
         android:text="修改密码"
-        android:layout_below="@+id/changeData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="18dp" />
+
     <View
+        android:layout_width="fill_parent"
         android:layout_height="1px"
+        android:layout_below="@+id/changePassword"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/changePassword"
-        android:background="@color/colorGray"
-        android:layout_width="fill_parent"></View>
+        android:background="@color/colorGray"></View>
+
     <Button
         android:id="@+id/userManage"
-        android:textSize="18dp"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/changePassword"
         android:layout_marginLeft="10dp"
         android:background="@color/translate"
+        android:gravity="center_vertical"
         android:text="用户管理"
-        android:layout_below="@+id/changePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="18dp" />
+
     <View
+        android:layout_width="fill_parent"
         android:layout_height="1px"
+        android:layout_below="@+id/userManage"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/userManage"
-        android:background="@color/colorGray"
-        android:layout_width="fill_parent"></View>
+        android:background="@color/colorGray"></View>
+
     <Button
         android:id="@+id/logout"
-        android:textSize="18dp"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userManage"
         android:layout_marginLeft="10dp"
         android:background="@color/translate"
+        android:gravity="center_vertical"
         android:text="退出登录"
-        android:layout_below="@+id/userManage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="18dp" />
+
     <View
+        android:layout_width="fill_parent"
         android:layout_height="1px"
         android:layout_below="@+id/logout"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@color/colorGray"
-        android:layout_width="fill_parent"></View>
+        android:background="@color/colorGray"></View>
 </RelativeLayout>

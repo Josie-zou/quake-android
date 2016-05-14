@@ -6,7 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -48,6 +52,7 @@ public class FourthFragment extends Fragment {
 
     private int itemCount = 12;
     private View view;
+    private Toolbar toolbar;
 
     public static FourthFragment instance() {
         FourthFragment view = new FourthFragment();
@@ -57,7 +62,7 @@ public class FourthFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null){
+        if (view == null) {
             view = inflater.inflate(R.layout.show_view, container, false);
         }
         return view;
@@ -67,19 +72,25 @@ public class FourthFragment extends Fragment {
     public void onStart() {
         super.onStart();
         initView();
+        setHasOptionsMenu(true);
 //        initEvent();
     }
 
     private void initView() {
+        toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setTitle("Quake");
+        toolbar.setTitleTextColor(Color.WHITE);
+
         ListView listView = (ListView) getView().findViewById(R.id.listView);
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
 
-        for (int i = 0; i < 10; i ++){
-            if (i % 3 == 0){
+        for (int i = 0; i < 10; i++) {
+            if (i % 3 == 0) {
                 list.add(new LineChartItem(generateDataLine(i + 1), getContext()));
-            } else if (i % 3 == 1){
+            } else if (i % 3 == 1) {
                 list.add(new BarChartItem(generateDataBar(i + 1), getContext()));
-            } else if (i % 3 == 2){
+            } else if (i % 3 == 2) {
                 list.add(new PieChartItem(generateDataPie(i + 1), getContext()));
             }
         }
@@ -129,7 +140,6 @@ public class FourthFragment extends Fragment {
         d2.setValueTextSize(15f);
         d2.setDrawValues(true);
         d2.setAxisDependency(YAxis.AxisDependency.LEFT);
-
 
 
         ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
@@ -213,5 +223,20 @@ public class FourthFragment extends Fragment {
         m.add("Dec");
 
         return m;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

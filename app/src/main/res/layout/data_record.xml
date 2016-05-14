@@ -3,18 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorBlue"
+        android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
 
         <ListView
             android:id="@+id/dataList"
-            android:footerDividersEnabled="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/colorGray"
-            android:dividerHeight="0.5dp" />
+            android:dividerHeight="0.5dp"
+            android:footerDividersEnabled="true" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -2,10 +2,15 @@ package com.josie.earthquake.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +32,7 @@ public class ThirdFragment extends Fragment {
     private Button userManage;
     private Button logout;
     private Bundle bundle;
+    private Toolbar toolbar;
 
     public static ThirdFragment instance() {
         ThirdFragment view = new ThirdFragment();
@@ -49,6 +55,7 @@ public class ThirdFragment extends Fragment {
         initView();
         initData();
         initEvent();
+        setHasOptionsMenu(true);
     }
 
     private void initView() {
@@ -56,6 +63,11 @@ public class ThirdFragment extends Fragment {
         changePassword = (Button) getView().findViewById(R.id.changePassword);
         userManage = (Button) getView().findViewById(R.id.userManage);
         logout = (Button) getView().findViewById(R.id.logout);
+
+        toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setTitle("Quake");
+        toolbar.setTitleTextColor(Color.WHITE);
     }
 
     private void initData() {
@@ -88,5 +100,20 @@ public class ThirdFragment extends Fragment {
                 intent.putExtras(bundle);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

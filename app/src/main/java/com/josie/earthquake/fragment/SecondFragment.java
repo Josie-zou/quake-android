@@ -2,12 +2,17 @@ package com.josie.earthquake.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -59,6 +64,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private Map<String, String> params;
     private ListViewAdapter listViewAdapter;
     private MyDialogFragment fragment;
+    private Toolbar toolbar;
 
     public static SecondFragment instance() {
         SecondFragment view = new SecondFragment();
@@ -91,6 +97,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         firstLoad = true;
         getData();
         initEvent();
+        setHasOptionsMenu(true);
     }
 
     private void initView() {
@@ -99,6 +106,10 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         footerView = LayoutInflater.from(getContext()).inflate(R.layout.list_footer, null);
         footer = (TextView) footerView.findViewById(R.id.footer);
         progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar);
+        toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setTitle("Quake");
+        toolbar.setTitleTextColor(Color.WHITE);
     }
 
     private List<QuakeInfo> getData() {
@@ -209,15 +220,18 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                listView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
+                listView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        listView.setBackgroundResource(R.color.translate);
+//                        Blurry.with(getContext()).radius(25).capture(listView);
+//
 //                        fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
 //                        Message message = new Message();
 //                        message.what = 2;
 //                        handler.sendMessage(message);
-//                    }
-//                },0);
+                    }
+                }, 0);
 //                new Thread(new Runnable() {
 //                    @Override
 //                    public void run() {
@@ -290,6 +304,20 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         result.addAll(currentResult);
         currentResult = null;
         response = null;
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
