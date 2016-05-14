@@ -69,6 +69,9 @@ public class LoginActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    if (id == 0){
+                        break;
+                    }
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("id", String.valueOf(id));

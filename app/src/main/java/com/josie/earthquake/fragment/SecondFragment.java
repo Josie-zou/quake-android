@@ -46,7 +46,9 @@ import jp.wasabeef.blurry.Blurry;
  * Created by Josie on 16/5/4.
  */
 public class SecondFragment extends android.support.v4.app.Fragment {
-    private int id = 1;
+
+    private int id;
+
     private View view;
     private ListView listView;
     private View footerView;
@@ -81,6 +83,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         View rootView = null;
         rootView = inflater.inflate(R.layout.data_record, container, false);
         view = rootView;
+        Bundle bundle1 = getArguments();
+        id = Integer.valueOf(bundle1.getString("id"));
         return rootView;
     }
 
@@ -122,7 +126,6 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             switch (msg.what) {
                 case 1:
                     footerView.setVisibility(View.GONE);
-                    Log.e("response", result.toString());
                     listViewAdapter = new ListViewAdapter(result, getActivity().getLayoutInflater(), getContext());
                     listView.setAdapter(listViewAdapter);
                     break;

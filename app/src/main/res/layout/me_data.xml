@@ -1,128 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/me_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
         android:text="个人资料"
         android:textColor="@color/colorBlue"
-        android:gravity="center"
         android:textSize="30dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/text_name"
-        android:layout_margin="5dp"
-        android:text="名称: "
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/me_title"
-        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/me_title"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:text="名称: "
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_name"
-        android:layout_margin="5dp"
-        android:text="123456"
-        android:layout_below="@+id/me_title"
-        android:layout_toRightOf="@+id/text_name"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@+id/me_title"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/text_name"
+        android:text="123456" />
 
     <TextView
         android:id="@+id/text_mail"
-        android:layout_margin="5dp"
-        android:text="邮箱: "
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_name"
-        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_name"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:text="邮箱: "
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_mail"
-        android:text=""
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_name"
-        android:layout_toRightOf="@+id/text_mail"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@+id/text_name"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/text_mail"
+        android:gravity="center_vertical"
+        android:text="" />
+
     <TextView
         android:id="@+id/text_mobile"
-        android:text="手机: "
-        android:layout_margin="5dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_mail"
-        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_mail"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:text="手机: "
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_mobile"
-        android:text=""
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_mail"
-        android:layout_toRightOf="@+id/text_mobile"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@+id/text_mail"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/text_mobile"
+        android:gravity="center_vertical"
+        android:text="" />
 
     <TextView
         android:id="@+id/text_job"
-        android:text="职业: "
-        android:layout_margin="5dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_mobile"
-        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_mobile"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:text="职业: "
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_job"
-        android:text=""
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_mobile"
-        android:layout_toRightOf="@+id/text_job"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@+id/text_mobile"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/text_job"
+        android:gravity="center_vertical"
+        android:text="" />
+
     <TextView
         android:id="@+id/text_address"
-        android:text="工作单位: "
-        android:layout_margin="5dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_job"
-        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_job"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:text="工作单位: "
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edit_address"
-        android:text=""
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/text_job"
-        android:layout_toRightOf="@+id/text_address"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@+id/text_job"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/text_address"
+        android:gravity="center_vertical"
+        android:text="" />
 
     <Button
         android:id="@+id/sure"
-        android:text="保存"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/text_address"
-        android:layout_alignParentRight="true"
-        android:background="@color/colorBlue"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/text_address"
+        android:layout_margin="10dp"
+        android:background="@color/colorBlue"
+        android:gravity="center"
+        android:text="保存" />
 
 </RelativeLayout>

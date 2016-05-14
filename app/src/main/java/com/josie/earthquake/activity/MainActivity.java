@@ -1,6 +1,7 @@
 package com.josie.earthquake.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -31,18 +32,13 @@ public class MainActivity extends FragmentActivity {
     private PushAgent pushAgent;
     private LinearLayout linearLayout;
     private LayoutInflater layoutInflater;
+    private Bundle bundle;
 
 
     private ImageButton imageButton1 = null;
     private ImageButton imageButton2 = null;
     private ImageButton imageButton3 = null;
     private ImageButton imageButton4 = null;
-
-//    private ImageView cursor;
-//    private Bitmap mCursorImg;
-//    private int mOffset;
-//    private int mCursorImgWidth;
-//    private int mCurrentIndex = 0;
 
 
     public ViewPager viewPager;
@@ -65,7 +61,8 @@ public class MainActivity extends FragmentActivity {
                 });
             }
         });
-
+        Intent intent = getIntent();
+        bundle = intent.getExtras();
         initView();
         initEvents();
         initData();
@@ -83,8 +80,11 @@ public class MainActivity extends FragmentActivity {
         List<Fragment> fragments = new ArrayList<>();
 //        Fragment firstFragment = FirstFragment.instance();
         Fragment secondFragment = SecondFragment.instance();
+        secondFragment.setArguments(bundle);
         Fragment fourthFragment = FourthFragment.instance();
+        fourthFragment.setArguments(bundle);
         Fragment thirdFragment = ThirdFragment.instance();
+        thirdFragment.setArguments(bundle);
 
 //        fragments.add(firstFragment);
         fragments.add(secondFragment);
@@ -106,19 +106,19 @@ public class MainActivity extends FragmentActivity {
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(0);
             }
         });
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(1);
             }
         });
         imageButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(2);
             }
         });
 

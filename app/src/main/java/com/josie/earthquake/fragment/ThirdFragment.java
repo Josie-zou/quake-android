@@ -26,6 +26,7 @@ public class ThirdFragment extends Fragment {
     private Button changePassword;
     private Button userManage;
     private Button logout;
+    private Bundle bundle;
 
     public static ThirdFragment instance() {
         ThirdFragment view = new ThirdFragment();
@@ -38,6 +39,7 @@ public class ThirdFragment extends Fragment {
         if (view == null) {
             view = inflater.inflate(R.layout.setting, container, false);
         }
+        bundle = getArguments();
         return view;
     }
 
@@ -65,6 +67,7 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MeDataActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -73,6 +76,7 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -81,6 +85,7 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AboutActivity.class);
+                intent.putExtras(bundle);
             }
         });
     }

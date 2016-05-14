@@ -18,8 +18,8 @@ public class User {
     private String workPlace;
     private String positon;
     private String qq;
-    private Date createTime;
-    private Date lastUpdateTime;
+    private String createTime;
+    private String lastUpdateTime;
 
     public static enum Privilege {
 
@@ -133,19 +133,19 @@ public class User {
         this.qq = qq;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getLastUpdateTime() {
+    public String getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(Date lastUpdateTime) {
+    public void setLastUpdateTime(String lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 
