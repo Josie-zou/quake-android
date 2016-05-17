@@ -108,7 +108,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar);
         toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setTitle("Quake");
+        toolbar.setTitle("Quake Eye");
         toolbar.setTitleTextColor(Color.WHITE);
     }
 

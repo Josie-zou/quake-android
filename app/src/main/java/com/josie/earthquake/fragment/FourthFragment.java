@@ -79,7 +79,7 @@ public class FourthFragment extends Fragment {
     private void initView() {
         toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setTitle("Quake");
+        toolbar.setTitle("Quake Eye");
         toolbar.setTitleTextColor(Color.WHITE);
 
         ListView listView = (ListView) getView().findViewById(R.id.listView);

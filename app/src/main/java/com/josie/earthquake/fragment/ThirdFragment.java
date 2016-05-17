@@ -69,12 +69,10 @@ public class ThirdFragment extends Fragment {
         changePassword = (Button) getView().findViewById(R.id.changePassword);
         userManage = (Button) getView().findViewById(R.id.userManage);
         logout = (Button) getView().findViewById(R.id.logout);
-//        tagContainerLayout = (TagContainerLayout) getView().findViewById(R.id.tagcontainerLayout);
-//        tagContainerLayout.addTag("test");
 
         toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setTitle("Quake");
+        toolbar.setTitle("Quake Eye");
         toolbar.setTitleTextColor(Color.WHITE);
     }
 

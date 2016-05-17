@@ -76,6 +76,7 @@ public class LoginActivity extends Activity {
                     Bundle bundle = new Bundle();
                     bundle.putString("id", String.valueOf(id));
                     intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     break;
             }
@@ -119,6 +120,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
