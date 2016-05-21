@@ -112,6 +112,12 @@ public class FourthFragment extends Fragment {
             e1.add(new Entry((int) (Math.random() * 65) + 40, i));
         }
 
+        ArrayList<Entry> e2 = new ArrayList<Entry>();
+
+        for (int i = 0; i < 12; i++) {
+            e2.add(new Entry((int) (Math.random() * 65) + 40, i));
+        }
+
         LineDataSet d1 = new LineDataSet(e1, "New DataSet " + cnt + ", (1)");
         d1.setLineWidth(4.0f);
         d1.setCircleRadius(5.5f);
@@ -122,12 +128,6 @@ public class FourthFragment extends Fragment {
         d1.setValueTextSize(15f);
         d1.setDrawValues(true);
         d1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        ArrayList<Entry> e2 = new ArrayList<Entry>();
-
-        for (int i = 0; i < 12; i++) {
-            e2.add(new Entry((int) (Math.random() * 65) + 40, i));
-        }
 
         LineDataSet d2 = new LineDataSet(e2, "New DataSet " + cnt + ", (2)");
         d2.setLineWidth(4.0f);

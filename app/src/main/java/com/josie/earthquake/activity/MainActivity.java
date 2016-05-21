@@ -132,50 +132,6 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-//    class PageClickerListener implements View.OnClickListener {
-//
-//        private int index;
-//
-//        public PageClickerListener(int position) {
-//            this.index = position;
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            // TODO Auto-generated method stub
-//            viewPager.setCurrentItem(index);
-////            mCurrentIndex = index;
-//        }
-//
-//        class ViewPageChangeListener implements ViewPager.OnPageChangeListener {
-//
-//            //            int offsetOne = mOffset * 2 + mCursorImgWidth;
-////            int offsetTwo = mOffset * 3 + mCursorImgWidth;
-////            int offsetThree = mOffset * 4 + mCursorImgWidth;
-//            Animation animation = null;
-//
-//            @Override
-//            public void onPageSelected(int arg0) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int arg0) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//
-//            @Override
-//            public void onPageScrolled(int arg0, float arg1, int arg2) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//
-//        }
-
-//    }
-
 
 }
 
