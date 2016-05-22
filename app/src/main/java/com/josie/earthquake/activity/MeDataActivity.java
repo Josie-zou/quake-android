@@ -76,7 +76,7 @@ public class MeDataActivity extends Activity {
     Runnable getUserRunnable = new Runnable() {
         @Override
         public void run() {
-            url = "http://192.168.1.122:8080/user/get?";
+            url = "http://192.168.1.122:8080/api/user/get?";
             params = new HashMap<>();
             params.put("id", id);
             HttpClientUtils httpClientUtils = new HttpClientUtils();

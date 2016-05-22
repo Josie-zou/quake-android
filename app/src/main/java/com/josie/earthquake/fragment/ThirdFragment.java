@@ -19,7 +19,9 @@ import android.widget.RelativeLayout;
 import com.josie.earthquake.R;
 import com.josie.earthquake.activity.AboutActivity;
 import com.josie.earthquake.activity.ChangePasswordActivity;
+import com.josie.earthquake.activity.FilterRuleActivity;
 import com.josie.earthquake.activity.MeDataActivity;
+import com.josie.earthquake.activity.WebViewActivity;
 
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class ThirdFragment extends Fragment {
     private Button changeData;
     private Button changePassword;
     private Button userManage;
+    private Button whiteListManage;
+    private Button filterRule;
     private Button logout;
     private Bundle bundle;
     private Toolbar toolbar;
@@ -67,6 +71,8 @@ public class ThirdFragment extends Fragment {
     private void initView() {
         changeData = (Button) getView().findViewById(R.id.changeData);
         changePassword = (Button) getView().findViewById(R.id.changePassword);
+        whiteListManage = (Button) getView().findViewById(R.id.whiteListManager);
+        filterRule = (Button) getView().findViewById(R.id.filterRule);
         userManage = (Button) getView().findViewById(R.id.userManage);
         logout = (Button) getView().findViewById(R.id.logout);
 
@@ -104,6 +110,24 @@ public class ThirdFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AboutActivity.class);
                 intent.putExtras(bundle);
+            }
+        });
+
+        whiteListManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        filterRule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FilterRuleActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

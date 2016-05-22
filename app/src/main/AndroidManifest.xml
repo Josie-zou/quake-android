@@ -21,6 +21,8 @@
         <activity android:name=".activity.AboutActivity"></activity>
         <activity android:name=".activity.SignUpActivity"></activity>
         <activity android:name=".activity.WebViewActivity"></activity>
+        <activity android:name=".activity.FilterRuleActivity"></activity>
+        <activity android:name=".activity.WhiteListActivity"></activity>
 
         <meta-data
             android:name="UMENG_APPKEY"

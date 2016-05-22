@@ -127,7 +127,7 @@ public class LoginActivity extends Activity {
     }
 
     private void getData() {
-        url = "http://192.168.1.122:8080/login?";
+        url = "http://192.168.1.122:8080/api/login?";
         params = new HashMap<>();
         params.put("account", username.getText().toString().trim());
         params.put("password", password.getText().toString().trim());

@@ -113,7 +113,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     }
 
     private List<QuakeInfo> getData() {
-        url = "http://192.168.1.122:8080/quake/getall?";
+        url = "http://192.168.1.122:8080/api/quake/getall?";
         start = result.size();
         count = 6;
         params = new HashMap<>();
