@@ -21,6 +21,7 @@ import com.josie.earthquake.activity.AboutActivity;
 import com.josie.earthquake.activity.ChangePasswordActivity;
 import com.josie.earthquake.activity.FilterRuleActivity;
 import com.josie.earthquake.activity.MeDataActivity;
+import com.josie.earthquake.activity.UserManageActivity;
 import com.josie.earthquake.activity.WebViewActivity;
 
 import java.util.List;
@@ -108,7 +109,7 @@ public class ThirdFragment extends Fragment {
         userManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AboutActivity.class);
+                Intent intent = new Intent(getActivity(), UserManageActivity.class);
                 intent.putExtras(bundle);
             }
         });
