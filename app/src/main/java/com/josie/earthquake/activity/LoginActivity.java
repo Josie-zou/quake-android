@@ -90,9 +90,7 @@ public class LoginActivity extends Activity {
             JSONObject data = jsonObject.getJSONObject("data");
             id = data.getInt("id");
         }
-
     }
-
 
     private void initView() {
         imageView = (ImageView) findViewById(R.id.image);

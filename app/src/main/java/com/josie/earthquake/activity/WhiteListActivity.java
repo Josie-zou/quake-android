@@ -13,15 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.alexkolpa.fabtoolbar.FabToolbar;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.josie.earthquake.R;
 import com.josie.earthquake.adapter.WhiteListAdapter;
 import com.josie.earthquake.fragment.MyDialogFragment;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +42,7 @@ import java.util.Map;
 public class WhiteListActivity extends Activity {
     private ListView listView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton add;
     private Toolbar toolbar;
     private List<WhiteList> result;
     private String url;
@@ -79,6 +83,8 @@ public class WhiteListActivity extends Activity {
         toolbar.inflateMenu(R.menu.menu_main);
         toolbar.setTitle("Quake Eye");
         toolbar.setTitleTextColor(Color.WHITE);
+        add = (FloatingActionButton) findViewById(R.id.add);
+
     }
 
     private void initData() {
@@ -100,6 +106,30 @@ public class WhiteListActivity extends Activity {
                         initData();
                     }
                 }, 3000);
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final NiftyDialogBuilder dialogBuilder1 = NiftyDialogBuilder.getInstance(WhiteListActivity.this);
+                dialogBuilder1.withTitle("Earthquake Eye")
+                        .withDialogColor("#6699CC")
+                        .withMessageColor("#FFFFFF")
+                        .withButton1Text("OK")
+                        .withButton2Text("cancel")
+                        .setButton1Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(WhiteListActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setButton2Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogBuilder1.dismiss();
+                            }
+                        }).show();
             }
         });
     }
