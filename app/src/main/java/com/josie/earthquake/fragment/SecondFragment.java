@@ -158,7 +158,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     listView.setAdapter(listViewAdapter);
                     break;
                 case 2:
-                    fragment.show(getFragmentManager(), "test");
+//                    fragment.show(getFragmentManager(), "test");
                     break;
 
 

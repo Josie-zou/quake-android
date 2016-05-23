@@ -23,6 +23,7 @@ import com.josie.earthquake.activity.FilterRuleActivity;
 import com.josie.earthquake.activity.MeDataActivity;
 import com.josie.earthquake.activity.UserManageActivity;
 import com.josie.earthquake.activity.WebViewActivity;
+import com.josie.earthquake.activity.WhiteListActivity;
 
 import java.util.List;
 
@@ -111,13 +112,14 @@ public class ThirdFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), UserManageActivity.class);
                 intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
         whiteListManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                Intent intent = new Intent(getActivity(), WhiteListActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

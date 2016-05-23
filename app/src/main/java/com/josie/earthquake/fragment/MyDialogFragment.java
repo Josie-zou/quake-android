@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 import com.josie.earthquake.R;
 
+import fr.tvbarthel.lib.blurdialogfragment.BlurDialogFragment;
 import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 
 /**
  * Created by Josie on 16/5/13.
  */
-public class MyDialogFragment extends SupportBlurDialogFragment {
+public class MyDialogFragment extends BlurDialogFragment {
 
     /**
      * Bundle key used to start the blur dialog with a given scale factor (float).
@@ -98,6 +99,34 @@ public class MyDialogFragment extends SupportBlurDialogFragment {
         args.putBoolean(
                 BUNDLE_KEY_USE_RENDERSCRIPT,
                 useRenderScript
+        );
+
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static MyDialogFragment newInstance(int radius,
+                                               float downScaleFactor,
+                                               boolean dimming,
+                                               boolean debug) {
+        MyDialogFragment fragment = new MyDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt(
+                BUNDLE_KEY_BLUR_RADIUS,
+                radius
+        );
+        args.putFloat(
+                BUNDLE_KEY_DOWN_SCALE_FACTOR,
+                downScaleFactor
+        );
+        args.putBoolean(
+                BUNDLE_KEY_DIMMING,
+                dimming
+        );
+        args.putBoolean(
+                BUNDLE_KEY_DEBUG,
+                debug
         );
 
         fragment.setArguments(args);

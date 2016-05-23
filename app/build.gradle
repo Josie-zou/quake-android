@@ -36,5 +36,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
     compile 'fr.tvbarthel.blurdialogfragment:lib:2.1.6'
     compile 'co.lujun:androidtagview:1.0.3'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
     compile project(':PushSDK')
 }
