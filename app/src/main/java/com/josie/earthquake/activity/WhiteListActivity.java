@@ -11,10 +11,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.alexkolpa.fabtoolbar.FabToolbar;
@@ -112,24 +118,30 @@ public class WhiteListActivity extends Activity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final NiftyDialogBuilder dialogBuilder1 = NiftyDialogBuilder.getInstance(WhiteListActivity.this);
-                dialogBuilder1.withTitle("Earthquake Eye")
-                        .withDialogColor("#6699CC")
-                        .withMessageColor("#FFFFFF")
-                        .withButton1Text("OK")
-                        .withButton2Text("cancel")
-                        .setButton1Click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(WhiteListActivity.this, "ok", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setButton2Click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialogBuilder1.dismiss();
-                            }
-                        }).show();
+                final AlertDialog builder = new AlertDialog.Builder(WhiteListActivity.this).create();
+                builder.show();
+                Window window = builder.getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                window.setContentView(R.layout.my_dialog);
+                LayoutInflater layoutInflater = getLayoutInflater();
+                View view = layoutInflater.inflate(R.layout.my_dialog, null);
+                TextView textView = (TextView) window.findViewById(R.id.dialog_title);
+                EditText editText = (EditText) window.findViewById(R.id.dialog_edittext);
+                Button sure = (Button) window.findViewById(R.id.dialog_sure);
+                Button cancel = (Button) window.findViewById(R.id.dialog_cancel);
+                editText.setFocusable(true);
+                sure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(WhiteListActivity.this, "commit", Toast.LENGTH_LONG).show();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        builder.dismiss();
+                    }
+                });
             }
         });
     }

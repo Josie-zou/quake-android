@@ -70,13 +70,13 @@ public class FirstFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MatchDialog matchDialog = new MatchDialog();
-                matchDialog.show(getFragmentManager(), "matchDialog");
-            }
-        });
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MatchDialog matchDialog = new MatchDialog();
+//                matchDialog.show(getFragmentManager(), "matchDialog");
+//            }
+//        });
     }
 
 }
