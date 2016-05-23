@@ -73,44 +73,18 @@ public class WhiteListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void initEvent(ViewHolder viewHolder) {
+    private void initEvent(final ViewHolder viewHolder) {
         viewHolder.updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String text = viewHolder.itemText.getText().toString().trim();
                 //TODO
                 Log.e("test", "update");
-                showUpdateData();
-//                Toast.makeText(context, "update", Toast.LENGTH_LONG).show();
-//                new AlertDialog.Builder(context).setTitle("wodelistview").setMessage("hello").show();
-//                MyDialogFragment fragment = MyDialogFragment.newInstance(4, 5, true, true);
-//                fragment.show(fragmentManager, "sign up");
-//                NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(context);
-//                dialogBuilder.withTitle("Earthquake Eye")
-//                        .withButton1Text("OK")
-//                        .withButton2Text("cancel")
-//                        .setButton1Click(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Toast.makeText(context, "ok", Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .setButton2Click(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }).show();
-            }
-        });
-
-        viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-                Log.e("delete", "delete");
-
-                NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(context);
-                dialogBuilder.withTitle("Earthquake Eye")
+                final NiftyDialogBuilder dialogBuilder1 = NiftyDialogBuilder.getInstance(context);
+                dialogBuilder1.withTitle("Earthquake Eye")
+                        .withMessage(text)
+                        .withDialogColor("#6699CC")
+                        .withMessageColor("#FFFFFF")
                         .withButton1Text("OK")
                         .withButton2Text("cancel")
                         .setButton1Click(new View.OnClickListener() {
@@ -122,15 +96,37 @@ public class WhiteListAdapter extends BaseAdapter {
                         .setButton2Click(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(context, "cancel", Toast.LENGTH_SHORT).show();
+                                dialogBuilder1.dismiss();
                             }
                         }).show();
             }
         });
-    }
 
-    private void showUpdateData() {
-        new AlertDialog.Builder(context).setTitle("dlsfjs").setMessage("heoo").show();
+        viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                Log.e("delete", "delete");
+
+                final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(context);
+                dialogBuilder.withTitle("Earthquake Eye")
+                        .withMessage("Are you sure?")
+                        .withButton1Text("OK")
+                        .withButton2Text("cancel")
+                        .setButton1Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(context, "ok", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setButton2Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogBuilder.dismiss();
+                            }
+                        }).show();
+            }
+        });
     }
 
     private class ViewHolder {

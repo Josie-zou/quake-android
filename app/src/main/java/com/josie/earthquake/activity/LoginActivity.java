@@ -69,7 +69,7 @@ public class LoginActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (id == 0){
+                    if (id == 0) {
                         break;
                     }
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -85,8 +85,11 @@ public class LoginActivity extends Activity {
 
     private void parseUser() throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
-        JSONObject data = jsonObject.getJSONObject("data");
-        id = data.getInt("id");
+        int code = jsonObject.getInt("code");
+        if (code == 0) {
+            JSONObject data = jsonObject.getJSONObject("data");
+            id = data.getInt("id");
+        }
 
     }
 

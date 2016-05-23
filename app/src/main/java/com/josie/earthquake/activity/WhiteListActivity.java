@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -62,7 +65,7 @@ public class WhiteListActivity extends Activity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    whiteListAdapter = new WhiteListAdapter(getApplicationContext(), result, getLayoutInflater(), getFragmentManager());
+                    whiteListAdapter = new WhiteListAdapter(WhiteListActivity.this, result, getLayoutInflater(), getFragmentManager());
                     listView.setAdapter(whiteListAdapter);
                     break;
             }
@@ -97,14 +100,6 @@ public class WhiteListActivity extends Activity {
                         initData();
                     }
                 }, 3000);
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                MyDialogFragment fragment = MyDialogFragment.newInstance(4, 5, true, true);
-                fragment.show(getFragmentManager(), "sign up");
-                return true;
             }
         });
     }
