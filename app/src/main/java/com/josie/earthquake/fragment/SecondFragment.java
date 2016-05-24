@@ -117,7 +117,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         start = result.size();
         count = 6;
         params = new HashMap<>();
-        params.put("id", Integer.toString(id));
+        params.put("status", "0");
         params.put("start", Integer.toString(start));
         params.put("count", Integer.toString(count));
         new Thread(getFirstData).start();
@@ -130,9 +130,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         @Override
         public void run() {
             if (firstLoad) {
-                HttpClientUtils httpClientUtils = new HttpClientUtils();
                 try {
-                    response = httpClientUtils.doPost(url, params);
+                    response = HttpClientUtils.doPost(url, params);
                     parseResponse();
                     Message message = new Message();
                     message.what = 1;
@@ -252,7 +251,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private void getMoreData() {
         start = result.size();
         params = new HashMap<>();
-        params.put("id", Integer.toString(id));
+        params.put("status", "0");
         params.put("start", Integer.toString(start));
         params.put("count", Integer.toString(count));
         new Thread(getdataRunnable).start();
@@ -261,9 +260,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     Runnable getdataRunnable = new Runnable() {
         @Override
         public void run() {
-            HttpClientUtils httpClientUtils = new HttpClientUtils();
             try {
-                response = httpClientUtils.doPost(url, params);
+                response = HttpClientUtils.doPost(url, params);
                 parseResponse();
                 Message message = new Message();
                 message.what = 1;
@@ -293,13 +291,9 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             quakeInfo.setTitle(jsonObject1.getString("title"));
             quakeInfo.setDescription(jsonObject1.getString("description"));
             quakeInfo.setType(jsonObject1.getString("type"));
-            quakeInfo.setManager(jsonObject1.getInt("manager"));
-            quakeInfo.setStatus(jsonObject1.getInt("status"));
+            quakeInfo.setManager(jsonObject1.getString("manager"));
+            quakeInfo.setStatus(jsonObject1.getString("status"));
             quakeInfo.setJumpTo(jsonObject1.getString("jumpTo"));
-            String createTime = jsonObject1.get("createTime").toString();
-            quakeInfo.setCreateTime(createTime);
-            String verifyTime = jsonObject1.get("verifyTime").toString();
-            quakeInfo.setVerifyTime(verifyTime);
             currentResult.add(quakeInfo);
         }
         result.addAll(currentResult);

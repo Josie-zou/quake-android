@@ -1,5 +1,9 @@
 package com.josie.earthquake.utils;
 
+import android.util.Log;
+
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -29,9 +33,9 @@ import java.util.Map;
  */
 public class HttpClientUtils {
 
-    private HttpClient httpClient = new DefaultHttpClient();
+    private static HttpClient httpClient = new DefaultHttpClient();
 
-    public String doPost(String url, Map<String, String> params) throws IOException {
+    public static String doPost(String url, Map<String, String> params) throws IOException {
 
         HttpPost httpPost = new HttpPost(url);
         List<NameValuePair> nvps = new ArrayList<>();
@@ -41,6 +45,11 @@ public class HttpClientUtils {
         }
         httpPost.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
         HttpResponse response = httpClient.execute(httpPost);
+
+        for (Header header : response.getAllHeaders()) {
+            Log.e(header.getValue(), header.getName());
+//            System.out.println(header.getValue() + "\t" + header.getName());
+        }
 
         return EntityUtils.toString(response.getEntity());
     }

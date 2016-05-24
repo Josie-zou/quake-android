@@ -14,15 +14,11 @@ public class QuakeInfo {
 
     private String type;
 
-    private Integer manager;
+    private String manager;
 
-    private Integer status;
+    private String status;
 
     private String jumpTo;
-
-    private String createTime;
-
-    private String verifyTime;
 
     public Integer getId() {
         return id;
@@ -56,19 +52,19 @@ public class QuakeInfo {
         this.type = type == null ? null : type.trim();
     }
 
-    public Integer getManager() {
+    public String getManager() {
         return manager;
     }
 
-    public void setManager(Integer manager) {
+    public void setManager(String manager) {
         this.manager = manager;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -78,22 +74,6 @@ public class QuakeInfo {
 
     public void setJumpTo(String jumpTo) {
         this.jumpTo = jumpTo == null ? null : jumpTo.trim();
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getVerifyTime() {
-        return verifyTime;
-    }
-
-    public void setVerifyTime(String verifyTime) {
-        this.verifyTime = verifyTime;
     }
 
 }

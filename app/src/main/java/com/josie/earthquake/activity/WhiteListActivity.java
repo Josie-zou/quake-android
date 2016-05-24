@@ -8,26 +8,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.alexkolpa.fabtoolbar.FabToolbar;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+
 import com.josie.earthquake.R;
 import com.josie.earthquake.adapter.WhiteListAdapter;
-import com.josie.earthquake.fragment.MyDialogFragment;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
 import com.melnykov.fab.FloatingActionButton;
@@ -96,7 +90,6 @@ public class WhiteListActivity extends Activity {
     private void initData() {
         url = "http://192.168.1.122:8080/api/whitelist/getAll?";
         params = new HashMap<>();
-        params.put("id", id);
         new Thread(runnable).start();
     }
 

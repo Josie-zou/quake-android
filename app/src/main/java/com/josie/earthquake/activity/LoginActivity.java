@@ -54,9 +54,10 @@ public class LoginActivity extends Activity {
 
         initView();
         initEvents();
-
+        new Thread(loginRunnable).start();
 
     }
+
 
     Handler handler = new Handler() {
         @Override
@@ -138,13 +139,18 @@ public class LoginActivity extends Activity {
         @Override
         public void run() {
             getData();
-            HttpClientUtils httpClientUtils = new HttpClientUtils();
             try {
-                response = httpClientUtils.doPost(url, params);
-                Message message = new Message();
-                message.what = 1;
-                handler.sendMessage(message);
+                response = HttpClientUtils.doPost(url, params);
+                JSONObject jsonObject = new JSONObject(response);
+                int code = jsonObject.getInt("code");
+                if (code == 0){
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
