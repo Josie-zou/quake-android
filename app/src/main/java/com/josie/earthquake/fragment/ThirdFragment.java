@@ -25,6 +25,7 @@ import com.josie.earthquake.activity.MeDataActivity;
 import com.josie.earthquake.activity.UserManageActivity;
 import com.josie.earthquake.activity.WebViewActivity;
 import com.josie.earthquake.activity.WhiteListActivity;
+import com.josie.earthquake.model.User;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class ThirdFragment extends Fragment {
             view = inflater.inflate(R.layout.setting, container, false);
         }
         bundle = getArguments();
+        User user = (User) bundle.getSerializable("user");
         return view;
     }
 

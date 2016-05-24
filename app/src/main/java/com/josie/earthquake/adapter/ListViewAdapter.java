@@ -1,6 +1,7 @@
 package com.josie.earthquake.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class ListViewAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;//定义Inflater,加载我们自定义的布局。
     private Context context;
 
-    public ListViewAdapter(List<QuakeInfo> quakeInfos, LayoutInflater layoutInflater, Context context){
+    public ListViewAdapter(List<QuakeInfo> quakeInfos, LayoutInflater layoutInflater, Context context) {
         this.quakeInfos = quakeInfos;
         this.layoutInflater = layoutInflater;
         this.context = context;
@@ -58,6 +59,7 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder.dataType = (TextView) convertView.findViewById(R.id.dataType);
             viewHolder.dataTitle = (TextView) convertView.findViewById(R.id.dataTitle);
             viewHolder.dataDetail = (TextView) convertView.findViewById(R.id.dataDetail);
+            viewHolder.dataVerify = (TextView) convertView.findViewById(R.id.verify);
             viewHolder.tagContainerLayout = (TagContainerLayout) convertView.findViewById(R.id.tagcontainerLayout1);
             convertView.setTag(viewHolder);
         } else {
@@ -68,13 +70,20 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.dataType.setText(quakeInfos.get(position).getType());
         viewHolder.dataTitle.setText(quakeInfos.get(position).getTitle());
         viewHolder.dataDetail.setText(quakeInfos.get(position).getDescription());
+        String status = quakeInfos.get(position).getStatus();
+        if (status.equals("未审核")) {
+            viewHolder.dataVerify.setTextColor(Color.RED);
+        }
+        viewHolder.dataVerify.setText(status);
         viewHolder.tagContainerLayout.setTag("test");
 
-        return convertView;    }
+        return convertView;
+    }
 
     private class ViewHolder {
         ImageView icon;
         TextView dataType;
+        TextView dataVerify;
         TextView dataTitle;
         TextView dataDetail;
         TagContainerLayout tagContainerLayout;

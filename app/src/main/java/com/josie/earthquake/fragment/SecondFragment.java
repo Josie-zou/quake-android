@@ -163,6 +163,10 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     listView.setAdapter(listViewAdapter);
                     break;
                 case 2:
+                    Toast.makeText(getContext(), "删除成功", Toast.LENGTH_LONG).show();
+                    result = new ArrayList<>();
+                    firstLoad = true;
+                    getData();
                     break;
                 case 3:
                     Toast.makeText(getContext(), "审核通过", Toast.LENGTH_LONG).show();
@@ -236,7 +240,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                 listView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (user.getPrivilege() != User.Privilege.Common.toInt()) {
+                        if (user.getPrivilege() != User.Privilege.Common.toInt() && result.get(position).getStatus().equals("未审核")) {
                             final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getContext());
                             dialogBuilder.withTitle("Earthquake Eye")
                                     .withMessage("通过审核?")
@@ -248,6 +252,27 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                                         @Override
                                         public void onClick(View v) {
                                             verifyData(result.get(position).getId());
+                                            dialogBuilder.dismiss();
+                                        }
+                                    })
+                                    .setButton2Click(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialogBuilder.dismiss();
+                                        }
+                                    }).show();
+                        }
+                        if (user.getPrivilege() != User.Privilege.Common.toInt() && result.get(position).getStatus().equals("已审核")) {
+                            final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getContext());
+                            dialogBuilder.withTitle("Earthquake Eye")
+                                    .withMessage("确定删除?")
+                                    .withButton1Text("OK")
+                                    .withButton2Text("cancel")
+                                    .setButton1Click(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            deleteData(result.get(position).getId());
+                                            dialogBuilder.dismiss();
                                         }
                                     })
                                     .setButton2Click(new View.OnClickListener() {
@@ -264,12 +289,42 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         });
     }
 
+    private void deleteData(final Integer id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String verifyUrl = "http://192.168.1.122:8080/api/quake/examine/delete?";
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id.toString());
+                try {
+                    String response = HttpClientUtils.doPost(verifyUrl, params);
+                    JSONObject jsonObject = new JSONObject(response);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        handler.sendEmptyMessage(2);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        Bundle bundle = new Bundle();
+                        bundle.putString("data", msg);
+                        Message message = new Message();
+                        message.what = 4;
+                        message.setData(bundle);
+                        handler.sendMessage(message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     private void verifyData(final Integer quakeId) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //TODO  审核接口未完善
-                String verifyUrl = "";
+                String verifyUrl = "http://192.168.1.122:8080/api/quake/examine/pass?";
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", quakeId.toString());
                 try {

@@ -26,6 +26,18 @@
         android:text="test1" />
 
     <TextView
+        android:id="@+id/verify"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@+id/dataType"
+        android:gravity="center_vertical"
+        android:text="审核通过"
+        android:textColor="#336633" />
+
+    <TextView
         android:id="@+id/dataTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,10 +76,10 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tagcontainerLayout1"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:text="test3"
-        android:layout_marginBottom="5dp"
         android:textColor="@color/colorPink"
         android:textSize="10dp" />
 
