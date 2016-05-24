@@ -62,18 +62,19 @@ public class UserManageActivity extends Activity {
         initEvent();
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    filterRuleAdapter = new FilterRuleAdapter(UserManageActivity.this, result, getLayoutInflater(), getFragmentManager());
-                    listView.setAdapter(filterRuleAdapter);
-                    break;
-            }
-        }
-    };
+    //TODO
+//    Handler handler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what) {
+//                case 1:
+//                    filterRuleAdapter = new FilterRuleAdapter(UserManageActivity.this, result, getLayoutInflater(), getFragmentManager());
+//                    listView.setAdapter(filterRuleAdapter);
+//                    break;
+//            }
+//        }
+//    };
 
     private void initView() {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.userManage_refresh);
@@ -111,11 +112,11 @@ public class UserManageActivity extends Activity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            HttpClientUtils httpClientUtils = new HttpClientUtils();
             try {
-                response = httpClientUtils.doPost(url, params);
+                response = HttpClientUtils.doPost(url, params);
                 parseResponse();
-                handler.sendEmptyMessage(1);
+                //TODO
+//                handler.sendEmptyMessage(1);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {

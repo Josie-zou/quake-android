@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.josie.earthquake.R;
 import com.josie.earthquake.adapter.FilterRuleAdapter;
 import com.josie.earthquake.adapter.WhiteListAdapter;
+import com.josie.earthquake.model.FilterRule;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
 import com.melnykov.fab.FloatingActionButton;
@@ -45,7 +46,7 @@ public class FilterRuleActivity extends Activity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton add;
     private Toolbar toolbar;
-    private List<WhiteList> result;
+    private List<FilterRule> result;
     private String url;
     private String id;
     private String response;
@@ -89,7 +90,7 @@ public class FilterRuleActivity extends Activity {
     }
 
     private void initData() {
-        url = "http://192.168.1.122:8080/api/whitelist/getAll?";
+        url = "http://192.168.1.122:8080/api/filter/getAll?";
         params = new HashMap<>();
         params.put("id", id);
         new Thread(runnable).start();
@@ -103,7 +104,7 @@ public class FilterRuleActivity extends Activity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        result = new ArrayList<WhiteList>();
+                        result = new ArrayList<FilterRule>();
                         initData();
                     }
                 }, 3000);
@@ -144,9 +145,8 @@ public class FilterRuleActivity extends Activity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            HttpClientUtils httpClientUtils = new HttpClientUtils();
             try {
-                response = httpClientUtils.doPost(url, params);
+                response = HttpClientUtils.doPost(url, params);
                 parseResponse();
                 handler.sendEmptyMessage(1);
             } catch (IOException e) {
@@ -164,12 +164,12 @@ public class FilterRuleActivity extends Activity {
         if (code == 0) {
             JSONArray datas = jsonObject.getJSONArray("data");
             for (int i = 0; i < datas.length(); i++) {
-                WhiteList whiteList = new WhiteList();
+                FilterRule filterRule = new FilterRule();
                 JSONObject jsonObject1 = (JSONObject) datas.get(i);
-                whiteList.setId(jsonObject1.getInt("id"));
-                whiteList.setUrl(jsonObject1.getString("url"));
-                whiteList.setUsername(jsonObject1.getString("username"));
-                result.add(whiteList);
+                filterRule.setId(jsonObject1.getInt("id"));
+                filterRule.setRule(jsonObject1.getString("rule"));
+                filterRule.setUsername(jsonObject1.getString("username"));
+                result.add(filterRule);
             }
         }
 

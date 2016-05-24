@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.josie.earthquake.R;
+import com.josie.earthquake.model.FilterRule;
 import com.josie.earthquake.model.WhiteList;
 
 import java.util.List;
@@ -21,12 +22,12 @@ import java.util.List;
  * Created by Josie on 16/5/23.
  */
 public class FilterRuleAdapter extends BaseAdapter {
-    private List<WhiteList> whiteLists;
+    private List<FilterRule> whiteLists;
     private Context context;
     private LayoutInflater layoutInflater;
     private FragmentManager fragmentManager;
 
-    public FilterRuleAdapter(Context context, List<WhiteList> whiteLists, LayoutInflater layoutInflater, android.app.FragmentManager fragmentManager) {
+    public FilterRuleAdapter(Context context, List<FilterRule> whiteLists, LayoutInflater layoutInflater, android.app.FragmentManager fragmentManager) {
         this.context = context;
         this.whiteLists = whiteLists;
         this.layoutInflater = layoutInflater;
@@ -63,7 +64,7 @@ public class FilterRuleAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.itemText.setText(whiteLists.get(position).getUrl().toString().trim());
+        viewHolder.itemText.setText(whiteLists.get(position).getRule().toString().trim());
         viewHolder.operaterText.setText("operator: " + whiteLists.get(position).getUsername().toString().trim());
         initEvent(viewHolder);
 
