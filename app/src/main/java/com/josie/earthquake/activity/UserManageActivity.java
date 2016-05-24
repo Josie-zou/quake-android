@@ -73,6 +73,11 @@ public class UserManageActivity extends Activity {
                     userManageAdapter = new UserManageAdapter(UserManageActivity.this, result, getLayoutInflater(), getFragmentManager());
                     listView.setAdapter(userManageAdapter);
                     break;
+                case 2:
+                    Bundle bundle = msg.getData();
+                    String data = bundle.getString("data");
+                    Toast.makeText(UserManageActivity.this, data, Toast.LENGTH_LONG).show();
+                    break;
             }
         }
     };
@@ -88,9 +93,8 @@ public class UserManageActivity extends Activity {
     }
 
     private void initData() {
-        url = "http://192.168.1.122:8080/api/whitelist/getAll?";
+        url = "http://192.168.1.122:8080/api/user/getall?";
         params = new HashMap<>();
-        params.put("id", id);
         new Thread(runnable).start();
     }
 
@@ -115,9 +119,21 @@ public class UserManageActivity extends Activity {
         public void run() {
             try {
                 response = HttpClientUtils.doPost(url, params);
-                parseResponse();
-                //TODO
-//                handler.sendEmptyMessage(1);
+                result = new ArrayList<>();
+                JSONObject jsonObject = new JSONObject(response);
+                int code = jsonObject.getInt("code");
+                if (code == 0) {
+                    parseResponse(jsonObject);
+                    handler.sendEmptyMessage(1);
+                } else {
+                    String data = jsonObject.getString("msg");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("data", data);
+                    Message message = new Message();
+                    message.setData(bundle);
+                    message.what = 2;
+                    handler.sendMessage(message);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -126,23 +142,16 @@ public class UserManageActivity extends Activity {
         }
     };
 
-    private void parseResponse() throws JSONException {
-        result = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(response);
-        int code = jsonObject.getInt("code");
-        if (code == 0) {
-            JSONArray datas = jsonObject.getJSONArray("data");
-            for (int i = 0; i < datas.length(); i++) {
-                //TODO
-                User user = new User();
-                JSONObject jsonObject1 = (JSONObject) datas.get(i);
-                user.setId(jsonObject1.getInt("id"));
-                user.setPhoneNumber(jsonObject1.getString("mail"));
-                user.setMailAdress(jsonObject1.getString("phone"));
-                user.setUsername(jsonObject1.getString("username"));
-                result.add(user);
-            }
+    private void parseResponse(JSONObject jsonObject) throws JSONException {
+        JSONArray datas = jsonObject.getJSONArray("data");
+        for (int i = 0; i < datas.length(); i++) {
+            User user = new User();
+            JSONObject jsonObject1 = (JSONObject) datas.get(i);
+            user.setId(jsonObject1.getInt("id"));
+            user.setPhoneNumber(jsonObject1.getString("mailAdress"));
+            user.setMailAdress(jsonObject1.getString("phoneNumber"));
+            user.setUsername(jsonObject1.getString("username"));
+            result.add(user);
         }
-
     }
 }
