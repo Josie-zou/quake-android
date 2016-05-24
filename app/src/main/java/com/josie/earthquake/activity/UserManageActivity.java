@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.josie.earthquake.R;
 import com.josie.earthquake.adapter.FilterRuleAdapter;
+import com.josie.earthquake.adapter.UserManageAdapter;
+import com.josie.earthquake.model.User;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
 import com.melnykov.fab.FloatingActionButton;
@@ -43,12 +45,12 @@ public class UserManageActivity extends Activity {
     private ListView listView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
-    private List<WhiteList> result;
+    private List<User> result;
     private String url;
     private String id;
     private String response;
     private Map<String, String> params;
-    private FilterRuleAdapter filterRuleAdapter;
+    private UserManageAdapter userManageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,19 +64,18 @@ public class UserManageActivity extends Activity {
         initEvent();
     }
 
-    //TODO
-//    Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            switch (msg.what) {
-//                case 1:
-//                    filterRuleAdapter = new FilterRuleAdapter(UserManageActivity.this, result, getLayoutInflater(), getFragmentManager());
-//                    listView.setAdapter(filterRuleAdapter);
-//                    break;
-//            }
-//        }
-//    };
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    userManageAdapter = new UserManageAdapter(UserManageActivity.this, result, getLayoutInflater(), getFragmentManager());
+                    listView.setAdapter(userManageAdapter);
+                    break;
+            }
+        }
+    };
 
     private void initView() {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.userManage_refresh);
@@ -101,7 +102,7 @@ public class UserManageActivity extends Activity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        result = new ArrayList<WhiteList>();
+                        result = new ArrayList<User>();
                         initData();
                     }
                 }, 3000);
@@ -132,12 +133,14 @@ public class UserManageActivity extends Activity {
         if (code == 0) {
             JSONArray datas = jsonObject.getJSONArray("data");
             for (int i = 0; i < datas.length(); i++) {
-                WhiteList whiteList = new WhiteList();
+                //TODO
+                User user = new User();
                 JSONObject jsonObject1 = (JSONObject) datas.get(i);
-                whiteList.setId(jsonObject1.getInt("id"));
-                whiteList.setUrl(jsonObject1.getString("url"));
-                whiteList.setUsername(jsonObject1.getString("username"));
-                result.add(whiteList);
+                user.setId(jsonObject1.getInt("id"));
+                user.setPhoneNumber(jsonObject1.getString("mail"));
+                user.setMailAdress(jsonObject1.getString("phone"));
+                user.setUsername(jsonObject1.getString("username"));
+                result.add(user);
             }
         }
 
