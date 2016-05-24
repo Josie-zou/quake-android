@@ -103,22 +103,54 @@ public class MainActivity extends FragmentActivity {
 //                viewPager.setCurrentItem(0);
 //            }
 //        });
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(0);
+//                imageButton2.setFocusable(true);
+                imageButton2.setPressed(true);
+//                imageButton3.setFocusable(false);
+//                imageButton4.setFocusable(false);
             }
         });
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(1);
+//                imageButton2.setFocusable(false);
+                imageButton3.setPressed(true);
+                imageButton2.setPressed(false);
+
+
+//                imageButton3.setFocusable(true);
+//                imageButton4.setFocusable(false);
             }
         });
         imageButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(2);
+                imageButton4.setPressed(true);
+
+//                imageButton2.setFocusable(false);
+//                imageButton3.setFocusable(false);
+//                imageButton4.setFocusable(true);
             }
         });
 
