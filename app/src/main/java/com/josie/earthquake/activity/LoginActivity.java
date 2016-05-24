@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.josie.earthquake.R;
 import com.josie.earthquake.model.User;
@@ -39,8 +40,8 @@ public class LoginActivity extends Activity {
     private EditText password;
     private Button login;
     private Button register;
-    private TextView forget;
     private PushAgent pushAgent;
+    private boolean firstOpen = true;
     private Map<String, String> params;
     private String url;
     private String response;
@@ -51,7 +52,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
         initView();
         initEvents();
         new Thread(loginRunnable).start();
@@ -80,6 +80,10 @@ public class LoginActivity extends Activity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     break;
+                case 2:
+                    Bundle bundle1 = msg.getData();
+                    String data = bundle1.getString("data");
+                    Toast.makeText(LoginActivity.this, data, Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -99,7 +103,6 @@ public class LoginActivity extends Activity {
         password = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
-        forget = (TextView) findViewById(R.id.forget);
     }
 
     private void initEvents() {
@@ -114,6 +117,7 @@ public class LoginActivity extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                firstOpen = false;
                 new Thread(loginRunnable).start();
             }
         });
@@ -143,9 +147,16 @@ public class LoginActivity extends Activity {
                 response = HttpClientUtils.doPost(url, params);
                 JSONObject jsonObject = new JSONObject(response);
                 int code = jsonObject.getInt("code");
-                if (code == 0){
-                    Message message = new Message();
+                Message message = new Message();
+                if (code == 0) {
                     message.what = 1;
+                    handler.sendMessage(message);
+                } else if (firstOpen == false){
+                    String data = jsonObject.getString("msg");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("data", data);
+                    message.setData(bundle);
+                    message.what = 2;
                     handler.sendMessage(message);
                 }
             } catch (IOException e) {

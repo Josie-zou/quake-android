@@ -15,6 +15,7 @@ import com.josie.earthquake.utils.HttpClientUtils;
 import com.ta.utdid2.android.utils.StringUtils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,7 +50,13 @@ public class SignUpActivity extends Activity {
             switch (msg.what) {
                 case 1:
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    break;
+                case 2:
+                    Bundle bundle = msg.getData();
+                    String data = bundle.getString("msg");
+                    Toast.makeText(SignUpActivity.this, data, Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -69,10 +76,14 @@ public class SignUpActivity extends Activity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StringUtils.isEmpty(mail.getText().toString()) && StringUtils.isEmpty(mobile.getText().toString())){
-//                    Toast.makeText(this, "请输入密码或者邮箱地址", Toast.LENGTH_LONG).show();
-                } else if (!passwordConfirm.getText().toString().trim().equals(password.getText().toString().trim())){
-//                    Toast.makeText(this, "密码输入错误", Toast.LENGTH_LONG).show();
+                if (StringUtils.isEmpty(mail.getText().toString())) {
+                    Toast.makeText(SignUpActivity.this, "请输入邮箱地址", Toast.LENGTH_LONG).show();
+                } else if (StringUtils.isEmpty(mobile.getText().toString())) {
+                    Toast.makeText(SignUpActivity.this, "请输入手机号码", Toast.LENGTH_LONG).show();
+                } else if (StringUtils.isEmpty(username.getText().toString().trim())) {
+                    Toast.makeText(SignUpActivity.this, "请输入用户名", Toast.LENGTH_LONG).show();
+                } else if (!passwordConfirm.getText().toString().trim().equals(password.getText().toString().trim())) {
+                    Toast.makeText(SignUpActivity.this, "密码输入不一致", Toast.LENGTH_LONG).show();
                 } else {
                     new Thread(signupRunnable).start();
                 }
@@ -87,10 +98,24 @@ public class SignUpActivity extends Activity {
             HttpClientUtils httpClientUtils = new HttpClientUtils();
             try {
                 response = httpClientUtils.doPost(url, params);
+                JSONObject jsonObject = new JSONObject(response);
                 Message message = new Message();
-                message.what = 1;
-                handler.sendMessage(message);
+                int code = jsonObject.getInt("code");
+                if (code == 0) {
+                    message.what = 1;
+                    handler.sendMessage(message);
+                } else {
+                    String msg = jsonObject.getString("msg");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("msg", msg);
+                    message.setData(bundle);
+                    message.what = 2;
+                    handler.sendMessage(message);
+                }
+
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
