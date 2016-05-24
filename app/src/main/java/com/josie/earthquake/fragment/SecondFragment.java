@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,10 +24,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.josie.earthquake.R;
 import com.josie.earthquake.activity.WebViewActivity;
 import com.josie.earthquake.adapter.ListViewAdapter;
 import com.josie.earthquake.model.QuakeInfo;
+import com.josie.earthquake.model.User;
 import com.josie.earthquake.utils.HttpClientUtils;
 
 import org.json.JSONArray;
@@ -65,6 +69,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private ListViewAdapter listViewAdapter;
     private MyDialogFragment fragment;
     private Toolbar toolbar;
+    private User user;
 
     public static SecondFragment instance() {
         SecondFragment view = new SecondFragment();
@@ -85,7 +90,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         rootView = inflater.inflate(R.layout.data_record, container, false);
         view = rootView;
         Bundle bundle1 = getArguments();
-        id = Integer.valueOf(bundle1.getString("id"));
+        user = (User) bundle1.getSerializable("user");
+        id = user.getId();
         return rootView;
     }
 
@@ -157,10 +163,17 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     listView.setAdapter(listViewAdapter);
                     break;
                 case 2:
-//                    fragment.show(getFragmentManager(), "test");
                     break;
-
-
+                case 3:
+                    Toast.makeText(getContext(), "审核通过", Toast.LENGTH_LONG).show();
+                    result = new ArrayList<>();
+                    firstLoad = true;
+                    getData();
+                    break;
+                case 4:
+                    Bundle bundle = msg.getData();
+                    String data = bundle.getString("data");
+                    Toast.makeText(getContext(), data, Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -219,33 +232,68 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 listView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        listView.setBackgroundResource(R.color.translate);
-//                        Blurry.with(getContext()).radius(25).capture(listView);
-//
-//                        fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
-//                        Message message = new Message();
-//                        message.what = 2;
-//                        handler.sendMessage(message);
+                        if (user.getPrivilege() != User.Privilege.Common.toInt()) {
+                            final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(getContext());
+                            dialogBuilder.withTitle("Earthquake Eye")
+                                    .withMessage("通过审核?")
+                                    .withDialogColor("#6699CC")
+                                    .withMessageColor("#FFFFFF")
+                                    .withButton1Text("OK")
+                                    .withButton2Text("cancel")
+                                    .setButton1Click(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            verifyData(result.get(position).getId());
+                                        }
+                                    })
+                                    .setButton2Click(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialogBuilder.dismiss();
+                                        }
+                                    }).show();
+                        }
                     }
                 }, 0);
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        fragment = MyDialogFragment.newInstance(4, 5, true, true, true, true);
-//                        Message message = new Message();
-//                        message.what = 2;
-//                        handler.sendMessage(message);
-//                    }
-//                }).start();
-                Toast.makeText(getContext(), "test", Toast.LENGTH_LONG).show();
-
                 return true;
             }
         });
+    }
+
+    private void verifyData(final Integer quakeId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //TODO  审核接口未完善
+                String verifyUrl = "";
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", quakeId.toString());
+                try {
+                    String response = HttpClientUtils.doPost(verifyUrl, params);
+                    JSONObject jsonObject = new JSONObject(response);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        handler.sendEmptyMessage(3);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        Bundle bundle = new Bundle();
+                        bundle.putString("data", msg);
+                        Message message = new Message();
+                        message.what = 4;
+                        message.setData(bundle);
+                        handler.sendMessage(message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private void getMoreData() {

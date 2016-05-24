@@ -1,11 +1,12 @@
 package com.josie.earthquake.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Josie on 16/5/12.
  */
-public class User {
+public class User implements Serializable {
     private int id;
     private String username;
     private String nickName;
@@ -20,6 +21,8 @@ public class User {
     private String qq;
     private String createTime;
     private String lastUpdateTime;
+
+    private static final long serialVersionUID = 1284392;
 
     public static enum Privilege {
 

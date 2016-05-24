@@ -46,11 +46,6 @@ public class HttpClientUtils {
         httpPost.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
         HttpResponse response = httpClient.execute(httpPost);
 
-        for (Header header : response.getAllHeaders()) {
-            Log.e(header.getValue(), header.getName());
-//            System.out.println(header.getValue() + "\t" + header.getName());
-        }
-
         return EntityUtils.toString(response.getEntity());
     }
 

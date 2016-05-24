@@ -45,7 +45,7 @@ public class LoginActivity extends Activity {
     private Map<String, String> params;
     private String url;
     private String response;
-    private int id;
+    private User user;
 
 
     @Override
@@ -65,17 +65,12 @@ public class LoginActivity extends Activity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    try {
-                        parseUser();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    if (id == 0) {
+                    if (user == null) {
                         break;
                     }
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("id", String.valueOf(id));
+                    bundle.putSerializable("user", user);
                     intent.putExtras(bundle);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -87,15 +82,6 @@ public class LoginActivity extends Activity {
             }
         }
     };
-
-    private void parseUser() throws JSONException {
-        JSONObject jsonObject = new JSONObject(response);
-        int code = jsonObject.getInt("code");
-        if (code == 0) {
-            JSONObject data = jsonObject.getJSONObject("data");
-            id = data.getInt("id");
-        }
-    }
 
     private void initView() {
         imageView = (ImageView) findViewById(R.id.image);
@@ -150,8 +136,19 @@ public class LoginActivity extends Activity {
                 Message message = new Message();
                 if (code == 0) {
                     message.what = 1;
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    user = new User();
+                    user.setId(data.getInt("id"));
+                    user.setPrivilege(data.getInt("privilege"));
+                    user.setUsername(data.getString("username"));
+                    user.setPhoneNumber(data.getString("phoneNumber"));
+                    user.setMailAdress(data.getString("mailAdress"));
+                    user.setPositon(data.getString("positon"));
+                    user.setWorkPlace(data.getString("workPlace"));
+                    user.setPassword(data.getString("password"));
+                    user.setQq(data.getString("qq"));
                     handler.sendMessage(message);
-                } else if (firstOpen == false){
+                } else if (firstOpen == false) {
                     String data = jsonObject.getString("msg");
                     Bundle bundle = new Bundle();
                     bundle.putString("data", data);

@@ -78,7 +78,6 @@ public class MainActivity extends FragmentActivity {
 
         layoutInflater = LayoutInflater.from(this);
         List<Fragment> fragments = new ArrayList<>();
-//        Fragment firstFragment = FirstFragment.instance();
         Fragment secondFragment = SecondFragment.instance();
         secondFragment.setArguments(bundle);
         Fragment fourthFragment = FourthFragment.instance();
@@ -86,7 +85,6 @@ public class MainActivity extends FragmentActivity {
         Fragment thirdFragment = ThirdFragment.instance();
         thirdFragment.setArguments(bundle);
 
-//        fragments.add(firstFragment);
         fragments.add(secondFragment);
         fragments.add(fourthFragment);
         fragments.add(thirdFragment);
@@ -98,13 +96,6 @@ public class MainActivity extends FragmentActivity {
         viewPager.setOffscreenPageLimit(3);
         imageButton2.setImageResource(R.drawable.main_press2);
 
-
-//        imageButton1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                viewPager.setCurrentItem(0);
-//            }
-//        });
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
