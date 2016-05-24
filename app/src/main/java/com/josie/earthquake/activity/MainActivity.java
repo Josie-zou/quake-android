@@ -96,6 +96,8 @@ public class MainActivity extends FragmentActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(3);
+        imageButton2.setImageResource(R.drawable.main_press2);
+
 
 //        imageButton1.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -103,6 +105,39 @@ public class MainActivity extends FragmentActivity {
 //                viewPager.setCurrentItem(0);
 //            }
 //        });
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetResource();
+                viewPager.setCurrentItem(0);
+
+            }
+        });
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetResource();
+                viewPager.setCurrentItem(1);
+
+            }
+        });
+        imageButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetResource();
+                viewPager.setCurrentItem(2);
+            }
+        });
+
+    }
+
+    private void resetResource() {
+        imageButton2.setImageResource(R.drawable.main2);
+        imageButton3.setImageResource(R.drawable.chart);
+        imageButton4.setImageResource(R.drawable.setting);
+    }
+
+    private void initEvents() {
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -111,7 +146,19 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int position) {
-
+                switch (position) {
+                    case 0:
+                        resetResource();
+                        imageButton2.setImageResource(R.drawable.main_press2);
+                        break;
+                    case 1:
+                        resetResource();
+                        imageButton3.setImageResource(R.drawable.chart_press);
+                        break;
+                    case 2:
+                        resetResource();
+                        imageButton4.setImageResource(R.drawable.setting_press);
+                }
             }
 
             @Override
@@ -119,45 +166,6 @@ public class MainActivity extends FragmentActivity {
 
             }
         });
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(0);
-//                imageButton2.setFocusable(true);
-                imageButton2.setPressed(true);
-//                imageButton3.setFocusable(false);
-//                imageButton4.setFocusable(false);
-            }
-        });
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(1);
-//                imageButton2.setFocusable(false);
-                imageButton3.setPressed(true);
-                imageButton2.setPressed(false);
-
-
-//                imageButton3.setFocusable(true);
-//                imageButton4.setFocusable(false);
-            }
-        });
-        imageButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(2);
-                imageButton4.setPressed(true);
-
-//                imageButton2.setFocusable(false);
-//                imageButton3.setFocusable(false);
-//                imageButton4.setFocusable(true);
-            }
-        });
-
-    }
-
-    private void initEvents() {
-
     }
 
     private void initData() {

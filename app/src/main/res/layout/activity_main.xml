@@ -40,7 +40,7 @@
                 android:layout_marginLeft="40sp"
                 android:background="@color/translate"
                 android:scaleType="fitXY"
-                android:src="@drawable/main_button_selector" />
+                android:src="@drawable/main2" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:layout_marginLeft="40sp"
                 android:background="@color/translate"
                 android:scaleType="fitXY"
-                android:src="@drawable/chart_button_selector" />
+                android:src="@drawable/chart" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +70,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="40sp"
-                android:background="@drawable/setting_button_selector" />
+                android:background="@drawable/setting" />
         </LinearLayout>
 
 
