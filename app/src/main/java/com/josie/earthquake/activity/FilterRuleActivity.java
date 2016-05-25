@@ -23,6 +23,7 @@ import com.josie.earthquake.R;
 import com.josie.earthquake.adapter.FilterRuleAdapter;
 import com.josie.earthquake.adapter.WhiteListAdapter;
 import com.josie.earthquake.model.FilterRule;
+import com.josie.earthquake.model.User;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
 import com.melnykov.fab.FloatingActionButton;
@@ -48,6 +49,7 @@ public class FilterRuleActivity extends Activity {
     private Toolbar toolbar;
     private List<FilterRule> result;
     private String url;
+    private User user;
     private String id;
     private String response;
     private Map<String, String> params;
@@ -59,7 +61,8 @@ public class FilterRuleActivity extends Activity {
         setContentView(R.layout.white_list);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        id = bundle.getString("id");
+        User user = (User) bundle.getSerializable("user");
+        id = String.valueOf(user.getId());
         initView();
         initData();
         initEvent();
@@ -73,6 +76,16 @@ public class FilterRuleActivity extends Activity {
                 case 1:
                     filterRuleAdapter = new FilterRuleAdapter(FilterRuleActivity.this, result, getLayoutInflater(), getFragmentManager());
                     listView.setAdapter(filterRuleAdapter);
+                    break;
+                case 2:
+                    Toast.makeText(FilterRuleActivity.this, "添加rule成功", Toast.LENGTH_LONG).show();
+                    initData();
+                    filterRuleAdapter.notifyDataSetChanged();
+                    break;
+                case 3:
+                    Bundle bundle = msg.getData();
+                    String data = bundle.getString("data");
+                    Toast.makeText(FilterRuleActivity.this, data, Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -92,7 +105,6 @@ public class FilterRuleActivity extends Activity {
     private void initData() {
         url = "http://192.168.1.122:8080/api/filter/getAll?";
         params = new HashMap<>();
-        params.put("id", id);
         new Thread(runnable).start();
     }
 
@@ -122,14 +134,16 @@ public class FilterRuleActivity extends Activity {
                 LayoutInflater layoutInflater = getLayoutInflater();
                 View view = layoutInflater.inflate(R.layout.my_dialog, null);
                 TextView textView = (TextView) window.findViewById(R.id.dialog_title);
-                EditText editText = (EditText) window.findViewById(R.id.dialog_edittext);
+                final EditText editText = (EditText) window.findViewById(R.id.dialog_edittext);
                 Button sure = (Button) window.findViewById(R.id.dialog_sure);
                 Button cancel = (Button) window.findViewById(R.id.dialog_cancel);
                 editText.setFocusable(true);
                 sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(FilterRuleActivity.this, "commit", Toast.LENGTH_LONG).show();
+
+                        addFilterRule(editText.getText().toString().trim());
+                        builder.dismiss();
                     }
                 });
                 cancel.setOnClickListener(new View.OnClickListener() {
@@ -142,13 +156,45 @@ public class FilterRuleActivity extends Activity {
         });
     }
 
+    private void addFilterRule(final String rule) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = "http://192.168.1.122:8080/api/filter/addRule?";
+                    Map<String, String> params = new HashMap<>();
+                    params.put("rule", rule);
+                    String response = HttpClientUtils.doPost(url, params);
+                    JSONObject jsonObject = new JSONObject(response);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        handler.sendEmptyMessage(2);
+                    } else {
+                        String data = jsonObject.getString("msg");
+                        Message message = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("data", data);
+                        message.setData(bundle);
+                        message.what = 3;
+                        handler.sendMessage(message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
             try {
+                response = "";
                 response = HttpClientUtils.doPost(url, params);
                 parseResponse();
-                handler.sendEmptyMessage(1);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -171,6 +217,15 @@ public class FilterRuleActivity extends Activity {
                 filterRule.setUsername(jsonObject1.getString("username"));
                 result.add(filterRule);
             }
+            handler.sendEmptyMessage(1);
+        } else {
+            String data = jsonObject.getString("msg");
+            Message message = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putString("data", data);
+            message.setData(bundle);
+            message.what = 3;
+            handler.sendMessage(message);
         }
 
     }
