@@ -72,6 +72,16 @@ public class WhiteListActivity extends Activity {
                     whiteListAdapter = new WhiteListAdapter(WhiteListActivity.this, result, getLayoutInflater(), getFragmentManager());
                     listView.setAdapter(whiteListAdapter);
                     break;
+                case 2:
+                    Toast.makeText(WhiteListActivity.this, "添加白名单成功", Toast.LENGTH_LONG).show();
+                    initData();
+                    whiteListAdapter.notifyDataSetChanged();
+                    break;
+                case 3:
+                    Bundle bundle = msg.getData();
+                    String data = bundle.getString("data");
+                    Toast.makeText(WhiteListActivity.this, data, Toast.LENGTH_LONG).show();
+                    break;
             }
         }
     };
@@ -119,14 +129,15 @@ public class WhiteListActivity extends Activity {
                 LayoutInflater layoutInflater = getLayoutInflater();
                 View view = layoutInflater.inflate(R.layout.my_dialog, null);
                 TextView textView = (TextView) window.findViewById(R.id.dialog_title);
-                EditText editText = (EditText) window.findViewById(R.id.dialog_edittext);
+                final EditText editText = (EditText) window.findViewById(R.id.dialog_edittext);
                 Button sure = (Button) window.findViewById(R.id.dialog_sure);
                 Button cancel = (Button) window.findViewById(R.id.dialog_cancel);
                 editText.setFocusable(true);
                 sure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(WhiteListActivity.this, "commit", Toast.LENGTH_LONG).show();
+                        addWhiteList(editText.getText().toString().trim());
+                        builder.dismiss();
                     }
                 });
                 cancel.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +148,37 @@ public class WhiteListActivity extends Activity {
                 });
             }
         });
+    }
+
+    private void addWhiteList(final String urlString) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = "http://192.168.1.122:8080/api/whitelist/add?";
+                    Map<String, String> params = new HashMap<>();
+                    params.put("url", urlString);
+                    String response = HttpClientUtils.doPost(url, params);
+                    JSONObject jsonObject = new JSONObject(response);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        handler.sendEmptyMessage(2);
+                    } else {
+                        String data = jsonObject.getString("msg");
+                        Message message = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("data", data);
+                        message.setData(bundle);
+                        message.what = 3;
+                        handler.sendMessage(message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     Runnable runnable = new Runnable() {
@@ -169,6 +211,14 @@ public class WhiteListActivity extends Activity {
                 whiteList.setUsername(jsonObject1.getString("username"));
                 result.add(whiteList);
             }
+        } else {
+            String data = jsonObject.getString("msg");
+            Message message = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putString("data", data);
+            message.setData(bundle);
+            message.what = 3;
+            handler.sendMessage(message);
         }
 
     }

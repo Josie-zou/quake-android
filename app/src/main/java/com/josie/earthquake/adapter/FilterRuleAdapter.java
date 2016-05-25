@@ -72,11 +72,11 @@ public class FilterRuleAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.white_list_item, parent, false);
+            convertView = layoutInflater.inflate(R.layout.filter_rule_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.itemText = (TextView) convertView.findViewById(R.id.item_text);
             viewHolder.operaterText = (TextView) convertView.findViewById(R.id.item_operater);
-            viewHolder.updateButton = (ImageButton) convertView.findViewById(R.id.item_update);
+            viewHolder.updateButton = (ImageButton) convertView.findViewById(R.id.filter_item_update);
             viewHolder.deleteButton = (ImageButton) convertView.findViewById(R.id.item_delete);
             convertView.setTag(viewHolder);
         } else {
@@ -168,6 +168,7 @@ public class FilterRuleAdapter extends BaseAdapter {
                     break;
                 case 4:
                     notifyDataSetChanged();
+                    break;
             }
         }
     };

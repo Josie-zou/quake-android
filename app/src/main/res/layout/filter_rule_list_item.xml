@@ -26,6 +26,16 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
+    <ImageButton
+        android:id="@+id/filter_item_update"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/item_operater"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/item_delete"
+        android:background="@drawable/update" />
+
 
     <ImageButton
         android:id="@+id/item_delete"
@@ -37,4 +47,5 @@
         android:layout_marginRight="5dp"
         android:background="@drawable/delete"
         android:text="删除" />
+
 </RelativeLayout>
