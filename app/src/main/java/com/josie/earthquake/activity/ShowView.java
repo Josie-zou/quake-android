@@ -41,12 +41,12 @@ public class ShowView extends Activity {
         ListView listView = (ListView) findViewById(R.id.listView);
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
 
-        for (int i = 0; i < 10; i ++){
-            if (i % 3 == 0){
+        for (int i = 0; i < 10; i++) {
+            if (i % 3 == 0) {
                 list.add(new LineChartItem(generateDataLine(i + 1), getApplicationContext()));
-            } else if (i % 3 == 1){
+            } else if (i % 3 == 1) {
                 list.add(new BarChartItem(generateDataBar(i + 1), getApplicationContext()));
-            } else if (i % 3 == 2){
+            } else if (i % 3 == 2) {
                 list.add(new PieChartItem(generateDataPie(i + 1), getApplicationContext()));
             }
         }
@@ -98,7 +98,6 @@ public class ShowView extends Activity {
         d2.setValueTextSize(15f);
         d2.setDrawValues(true);
         d2.setAxisDependency(YAxis.AxisDependency.LEFT);
-
 
 
         ArrayList<ILineDataSet> sets = new ArrayList<ILineDataSet>();
@@ -183,10 +182,4 @@ public class ShowView extends Activity {
 
         return m;
     }
-
-
-//
-//    private Float getRandom(int range, float startsfrom) {
-//        return (float) (Math.random() * range) + startsfrom;
-//    }
 }
