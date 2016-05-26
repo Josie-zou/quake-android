@@ -33,10 +33,10 @@ import java.util.Map;
  */
 public class HttpClientUtils {
 
-    private static HttpClient httpClient = new DefaultHttpClient();
+//    private static HttpClient httpClient = new DefaultHttpClient();
 
     public static String doPost(String url, Map<String, String> params) throws IOException {
-
+        DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
         List<NameValuePair> nvps = new ArrayList<>();
         for (String key : params.keySet()) {
@@ -45,8 +45,9 @@ public class HttpClientUtils {
         }
         httpPost.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
         HttpResponse response = httpClient.execute(httpPost);
-
-        return EntityUtils.toString(response.getEntity());
+        String result = EntityUtils.toString(response.getEntity());
+        response = null;
+        return result;
     }
 
 }
