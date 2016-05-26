@@ -11,6 +11,7 @@ import android.support.annotation.StringDef;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -226,6 +227,9 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                         listView.addFooterView(footerView);
                         getMoreData();
                         listViewAdapter.notifyDataSetChanged();
+                        int count = listView.getCount();
+                        Log.e("count", String.valueOf(count));
+                        listView.setSelection(listView.getCount() - 1);
 //                        listView.setSelectionAfterHeaderView();
 //                        listView.setSelection(listView.getCount() - 1); //设置选中项
                     }
