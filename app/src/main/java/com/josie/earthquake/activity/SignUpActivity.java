@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.josie.earthquake.R;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 import com.ta.utdid2.android.utils.StringUtils;
 
 import org.json.JSONException;
@@ -33,7 +34,6 @@ public class SignUpActivity extends Activity {
     private Button signup;
     private String response;
     private Map<String, String> params;
-    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class SignUpActivity extends Activity {
             getData();
             HttpClientUtils httpClientUtils = new HttpClientUtils();
             try {
-                response = httpClientUtils.doPost(url, params);
+                response = httpClientUtils.doPost(UrlUtils.LogUpUrl, params);
                 JSONObject jsonObject = new JSONObject(response);
                 Message message = new Message();
                 int code = jsonObject.getInt("code");
@@ -122,7 +122,6 @@ public class SignUpActivity extends Activity {
     };
 
     private void getData() {
-        url = "http://192.168.1.122:8080/signup?";
         params = new HashMap<>();
         params.put("username", username.getText().toString().trim());
         params.put("password", password.getText().toString().trim());

@@ -35,6 +35,7 @@ import com.josie.earthquake.listItem.ChartItem;
 import com.josie.earthquake.listItem.LineChartItem;
 import com.josie.earthquake.listItem.PieChartItem;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -208,10 +209,9 @@ public class FourthFragment extends Fragment {
     Runnable getLineData = new Runnable() {
         @Override
         public void run() {
-            String url = "http://192.168.1.122:8080/api/quake/getByDate?";
             Map<String, String> params = new HashMap<>();
             try {
-                String response = HttpClientUtils.doPost(url, params);
+                String response = HttpClientUtils.doPost(UrlUtils.GetQuakeByDateURL, params);
                 JSONObject jsonObject = new JSONObject(response);
                 int code = jsonObject.getInt("code");
                 if (code == 0) {
@@ -248,10 +248,9 @@ public class FourthFragment extends Fragment {
     Runnable getPieData1 = new Runnable() {
         @Override
         public void run() {
-            String url = "http://192.168.1.122:8080/api/quake/getByType?";
             Map<String, String> params = new HashMap<>();
             try {
-                String response = HttpClientUtils.doPost(url, params);
+                String response = HttpClientUtils.doPost(UrlUtils.GetQuakeByTypeUrl, params);
                 JSONObject jsonObject = new JSONObject(response);
                 int code = jsonObject.getInt("code");
                 if (code == 0) {
@@ -279,10 +278,9 @@ public class FourthFragment extends Fragment {
     Runnable getPieData2 = new Runnable() {
         @Override
         public void run() {
-            String url = "http://192.168.1.122:8080/api/quake/getByKeywords?";
             Map<String, String> params = new HashMap<>();
             try {
-                String response = HttpClientUtils.doPost(url, params);
+                String response = HttpClientUtils.doPost(UrlUtils.GetQuakeByKeywordsUrl, params);
                 JSONObject jsonObject = new JSONObject(response);
                 int code = jsonObject.getInt("code");
                 if (code == 0) {

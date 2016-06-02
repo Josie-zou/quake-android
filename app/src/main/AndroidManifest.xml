@@ -15,7 +15,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity"></activity>
-        <activity android:name=".activity.ShowView"></activity>
         <activity android:name=".activity.MeDataActivity"></activity>
         <activity android:name=".activity.ChangePasswordActivity"></activity>
         <activity android:name=".activity.AboutActivity"></activity>

@@ -1,30 +1,18 @@
 package com.josie.earthquake.utils;
 
-import android.util.Log;
-
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntityHC4;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGetHC4;
+import org.apache.http.client.methods.HttpPostHC4;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,20 +21,27 @@ import java.util.Map;
  */
 public class HttpClientUtils {
 
-//    private static HttpClient httpClient = new DefaultHttpClient();
+    private static CloseableHttpClient httpClient = HttpClients.custom().useSystemProperties().build();
 
     public static String doPost(String url, Map<String, String> params) throws IOException {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
+        HttpPostHC4 httpPost = new HttpPostHC4(url);
         List<NameValuePair> nvps = new ArrayList<>();
         for (String key : params.keySet()) {
             String value = params.get(key);
             nvps.add(new BasicNameValuePair(key, value));
         }
-        httpPost.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
-        HttpResponse response = httpClient.execute(httpPost);
-        String result = EntityUtils.toString(response.getEntity());
-        response = null;
+        httpPost.setEntity(new UrlEncodedFormEntityHC4(nvps, "utf-8"));
+        CloseableHttpResponse response = httpClient.execute(httpPost);
+        String result = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+        response.close();
+        return result;
+    }
+
+    public static String doGet(String url) throws  Exception {
+        HttpGetHC4 httpGetHC = new HttpGetHC4(url);
+        CloseableHttpResponse response = httpClient.execute(httpGetHC);
+        String result = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+        response.close();
         return result;
     }
 

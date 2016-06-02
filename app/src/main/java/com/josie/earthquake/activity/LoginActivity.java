@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.josie.earthquake.R;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 
@@ -43,7 +44,6 @@ public class LoginActivity extends Activity {
     private PushAgent pushAgent;
     private boolean firstOpen = true;
     private Map<String, String> params;
-    private String url;
     private String response;
     private User user;
 
@@ -119,7 +119,6 @@ public class LoginActivity extends Activity {
     }
 
     private void getData() {
-        url = "http://192.168.1.122:8080/api/login?";
         params = new HashMap<>();
         params.put("account", username.getText().toString().trim());
         params.put("password", password.getText().toString().trim());
@@ -130,7 +129,7 @@ public class LoginActivity extends Activity {
         public void run() {
             getData();
             try {
-                response = HttpClientUtils.doPost(url, params);
+                response = HttpClientUtils.doPost(UrlUtils.LoginUrl, params);
                 JSONObject jsonObject = new JSONObject(response);
                 int code = jsonObject.getInt("code");
                 Message message = new Message();

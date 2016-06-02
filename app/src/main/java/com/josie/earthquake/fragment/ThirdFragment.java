@@ -33,6 +33,7 @@ import com.josie.earthquake.activity.WebViewActivity;
 import com.josie.earthquake.activity.WhiteListActivity;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -198,10 +199,9 @@ public class ThirdFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "";
                 Map<String, String> params = new HashMap<String, String>();
                 try {
-                    String response = HttpClientUtils.doPost(url, params);
+                    String response = HttpClientUtils.doPost(UrlUtils.LogoutUrl, params);
                     JSONObject jsonObject = new JSONObject(response);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {

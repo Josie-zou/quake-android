@@ -71,7 +71,6 @@ public class MainActivity extends FragmentActivity {
 
     private void initView() {
         viewPager = (ViewPager) this.findViewById(R.id.view_pager);
-//        imageButton1 = (ImageButton) this.findViewById(R.id.main);
         imageButton2 = (ImageButton) this.findViewById(R.id.chart);
         imageButton3 = (ImageButton) this.findViewById(R.id.shangchuan);
         imageButton4 = (ImageButton) this.findViewById(R.id.me);

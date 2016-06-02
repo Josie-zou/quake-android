@@ -32,6 +32,7 @@ import com.josie.earthquake.adapter.ListViewAdapter;
 import com.josie.earthquake.model.QuakeInfo;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +65,6 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private boolean firstLoad = true;
     private int start;
     private int count;
-    private String url;
     private String response;
     private Map<String, String> params;
     private ListViewAdapter listViewAdapter;
@@ -120,7 +120,6 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     }
 
     private List<QuakeInfo> getData() {
-        url = "http://192.168.1.122:8080/api/quake/getall?";
         start = result.size();
         count = 6;
         params = new HashMap<>();
@@ -138,7 +137,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         public void run() {
             if (firstLoad) {
                 try {
-                    response = HttpClientUtils.doPost(url, params);
+                    response = HttpClientUtils.doPost(UrlUtils.GetAllQuakeInfoUrl, params);
                     parseResponse();
                     Message message = new Message();
                     message.what = 1;
@@ -297,11 +296,10 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String verifyUrl = "http://192.168.1.122:8080/api/quake/examine/delete?";
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", id.toString());
                 try {
-                    String response = HttpClientUtils.doPost(verifyUrl, params);
+                    String response = HttpClientUtils.doPost(UrlUtils.DeleteQuakeUrl, params);
                     JSONObject jsonObject = new JSONObject(response);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -328,11 +326,11 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String verifyUrl = "http://192.168.1.122:8080/api/quake/examine/pass?";
+//                String verifyUrl = "http://192.168.1.122:8080/api/quake/examine/pass?";
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", quakeId.toString());
                 try {
-                    String response = HttpClientUtils.doPost(verifyUrl, params);
+                    String response = HttpClientUtils.doPost(UrlUtils.VerifyQuakeUrl, params);
                     JSONObject jsonObject = new JSONObject(response);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -368,7 +366,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         @Override
         public void run() {
             try {
-                response = HttpClientUtils.doPost(url, params);
+                response = HttpClientUtils.doPost(UrlUtils.GetAllQuakeInfoUrl, params);
                 parseResponse();
                 Message message = new Message();
                 message.what = 1;
