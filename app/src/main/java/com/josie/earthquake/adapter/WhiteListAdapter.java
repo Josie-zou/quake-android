@@ -20,6 +20,7 @@ import com.josie.earthquake.R;
 import com.josie.earthquake.fragment.MyDialogFragment;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -134,7 +135,7 @@ public class WhiteListAdapter extends BaseAdapter {
     };
 
     private void getData() {
-        url = "http://192.168.1.122:8080/api/whitelist/getAll?";
+        url = UrlUtils.GetAllWhiteListUrl;
         params = new HashMap<>();
         new Thread(runnable).start();
     }
@@ -183,7 +184,7 @@ public class WhiteListAdapter extends BaseAdapter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://192.168.1.122:8080/api/whitelist/delete?";
+                String url = UrlUtils.DeleteWhiteListUrl;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", String.valueOf(id));
                 try {

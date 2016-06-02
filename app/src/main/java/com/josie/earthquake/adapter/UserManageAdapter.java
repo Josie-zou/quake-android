@@ -19,6 +19,7 @@ import com.josie.earthquake.R;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -163,7 +164,7 @@ public class UserManageAdapter extends BaseAdapter {
     };
 
     private void getData() {
-        url = "http://192.168.1.122:8080/api/user/getall?";
+        url = UrlUtils.GetAllUserUrl;
         params = new HashMap<>();
         new Thread(runnable).start();
     }
@@ -213,7 +214,7 @@ public class UserManageAdapter extends BaseAdapter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://192.168.1.122:8080/api/user/setManager?";
+                String url = UrlUtils.SetManagerUrl;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", String.valueOf(id));
                 try {
@@ -244,7 +245,7 @@ public class UserManageAdapter extends BaseAdapter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://192.168.1.122:8080/api/user/delete?";
+                String url = UrlUtils.DeleteUserUrl;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", String.valueOf(id));
                 try {

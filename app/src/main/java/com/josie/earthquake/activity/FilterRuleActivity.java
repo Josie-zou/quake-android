@@ -26,6 +26,7 @@ import com.josie.earthquake.model.FilterRule;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -103,7 +104,7 @@ public class FilterRuleActivity extends Activity {
     }
 
     private void initData() {
-        url = "http://192.168.1.122:8080/api/filter/getAll?";
+        url = UrlUtils.GetAllFilterUrl;
         params = new HashMap<>();
         new Thread(runnable).start();
     }
@@ -161,7 +162,7 @@ public class FilterRuleActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    String url = "http://192.168.1.122:8080/api/filter/addRule?";
+                    String url = UrlUtils.AddFilterUrl;
                     Map<String, String> params = new HashMap<>();
                     params.put("rule", rule);
                     String response = HttpClientUtils.doPost(url, params);

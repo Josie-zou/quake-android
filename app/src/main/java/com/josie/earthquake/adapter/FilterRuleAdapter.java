@@ -24,6 +24,7 @@ import com.josie.earthquake.R;
 import com.josie.earthquake.model.FilterRule;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -177,7 +178,7 @@ public class FilterRuleAdapter extends BaseAdapter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://192.168.1.122:8080/api/filter/update?";
+                String url = UrlUtils.UpdateFilterUrl;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", String.valueOf(id));
                 params.put("rule", data);
@@ -209,7 +210,7 @@ public class FilterRuleAdapter extends BaseAdapter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://192.168.1.122:8080/api/filter/deleteRule?";
+                String url = UrlUtils.DeleteFilterUrl;
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", String.valueOf(id));
                 try {
@@ -237,7 +238,7 @@ public class FilterRuleAdapter extends BaseAdapter {
     }
 
     private void getData() {
-        url = "http://192.168.1.122:8080/api/filter/getAll?";
+        url = UrlUtils.GetAllFilterUrl;
         params = new HashMap<>();
         new Thread(runnable).start();
     }

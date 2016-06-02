@@ -25,6 +25,7 @@ import com.josie.earthquake.adapter.UserManageAdapter;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.model.WhiteList;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -93,7 +94,7 @@ public class UserManageActivity extends Activity {
     }
 
     private void initData() {
-        url = "http://192.168.1.122:8080/api/user/getall?";
+        url = UrlUtils.GetAllUserUrl;
         params = new HashMap<>();
         new Thread(runnable).start();
     }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.josie.earthquake.R;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 import com.ta.utdid2.android.utils.StringUtils;
 
 import org.json.JSONException;
@@ -92,7 +93,7 @@ public class ChangePasswordActivity extends Activity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            String url = "http://192.168.1.122:8080/api/user/changePassword?";
+                            String url = UrlUtils.ChangePasswordUrl;
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("password", originPassword.getText().toString().trim());
                             params.put("newPassword", newPassword.getText().toString().trim());

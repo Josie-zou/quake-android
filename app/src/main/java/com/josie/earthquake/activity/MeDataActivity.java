@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.josie.earthquake.R;
 import com.josie.earthquake.model.User;
 import com.josie.earthquake.utils.HttpClientUtils;
+import com.josie.earthquake.utils.UrlUtils;
 import com.ta.utdid2.android.utils.StringUtils;
 
 import org.json.JSONException;
@@ -113,7 +114,7 @@ public class MeDataActivity extends Activity {
     Runnable updateRunnable = new Runnable() {
         @Override
         public void run() {
-            url = "http://192.168.1.122:8080/api/user/update?";
+            url = UrlUtils.UpdateUserUrl;
             params = new HashMap<String, String>();
             params.put("id", String.valueOf(user.getId()));
             params.put("username", name.getText().toString().trim());
