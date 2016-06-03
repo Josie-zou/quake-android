@@ -71,6 +71,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
     private MyDialogFragment fragment;
     private Toolbar toolbar;
     private User user;
+    private int currumtCount = 0;
 
     public static SecondFragment instance() {
         SecondFragment view = new SecondFragment();
@@ -121,7 +122,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
 
     private List<QuakeInfo> getData() {
         start = result.size();
-        count = 6;
+        count = 10;
         params = new HashMap<>();
         params.put("status", "0");
         params.put("start", Integer.toString(start));
@@ -178,6 +179,14 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     Bundle bundle = msg.getData();
                     String data = bundle.getString("data");
                     Toast.makeText(getContext(), data, Toast.LENGTH_LONG).show();
+                    break;
+                case 5:
+                    listViewAdapter.notifyDataSetChanged();
+//                    listView.setSelection(currumtCount - 1);
+//                    if (result.size() % count == 0) {
+//                        loadingMore = true;
+//                    }
+                    break;
             }
         }
     };
@@ -224,11 +233,8 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                     if ((totalItemCount - visibleItemCount == firstVisibleItem) && loadingMore && (listViewAdapter != null)) {
                         loadingMore = false;
                         listView.addFooterView(footerView);
+                        currumtCount = totalItemCount;
                         getMoreData();
-                        listViewAdapter.notifyDataSetChanged();
-                        int count = listView.getCount();
-                        Log.e("count", String.valueOf(count));
-                        listView.setSelection(listView.getCount() - 1);
 //                        listView.setSelectionAfterHeaderView();
 //                        listView.setSelection(listView.getCount() - 1); //设置选中项
                     }
@@ -326,7 +332,6 @@ public class SecondFragment extends android.support.v4.app.Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                String verifyUrl = "http://192.168.1.122:8080/api/quake/examine/pass?";
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", quakeId.toString());
                 try {
@@ -369,7 +374,7 @@ public class SecondFragment extends android.support.v4.app.Fragment {
                 response = HttpClientUtils.doPost(UrlUtils.GetAllQuakeInfoUrl, params);
                 parseResponse();
                 Message message = new Message();
-                message.what = 1;
+                message.what = 5;
                 handler.sendMessage(message);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -401,9 +406,19 @@ public class SecondFragment extends android.support.v4.app.Fragment {
             quakeInfo.setJumpTo(jsonObject1.getString("jumpTo"));
             currentResult.add(quakeInfo);
         }
-        result.addAll(currentResult);
+        convertResult(currentResult);
+//        result.addAll(currentResult);
         currentResult = null;
         response = null;
+    }
+
+    private void convertResult(List<QuakeInfo> currentResult) {
+        if (currentResult == null || currentResult.size() == 0) {
+            return;
+        }
+        for (QuakeInfo quakeInfo : currentResult) {
+            result.add(quakeInfo);
+        }
     }
 
     @Override

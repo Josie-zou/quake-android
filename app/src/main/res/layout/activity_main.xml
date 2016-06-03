@@ -68,9 +68,11 @@
                 android:id="@+id/me"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
                 android:layout_marginLeft="40sp"
-                android:background="@drawable/setting" />
+                android:background="@color/translate"
+                android:scaleType="fitXY"
+                android:src="@drawable/setting" />
         </LinearLayout>
 
 
